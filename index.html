@@ -231,9 +231,13 @@
                 <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends()">Invite Friends via @iceberobot +10,000 BERKS</a>
             </div>
             <div class="task-item">
-    <span>Task 4:</span> 
-    <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(1500, 'iceberk')">Join the IceBerk Community +1,500 BERKS</a>
-</div>
+                <span>Task 4:</span> 
+                <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(1500, 'iceberk')">Join the IceBerk Community +1,500 BERKS</a>
+            </div>
+            <div class="task-item">
+                <span>Mini Games:</span>
+                <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()">Play Mini Games</a>
+            </div>
         </div>
     </div>
     <div class="section" id="export" style="display: none;">
@@ -258,10 +262,12 @@
         let username = '';
         let tasks = {
             telegram: false,
-            twitter: false,
-            invite: false
+            whatsapp: false,
+            invite: false,
+            iceberk: false
         };
         let inviteStartTime = null;
+        let lastPlayedTime = null;
 
         function signUp() {
             username = document.getElementById('username').value;
@@ -340,8 +346,36 @@
             }
         }
 
+        function playMiniGames() {
+            const currentTime = Date.now();
+            const eightHoursInMillis = 8 * 60 * 60 * 1000;
+
+            if (!lastPlayedTime || (currentTime - lastPlayedTime) >= eightHoursInMillis) {
+                lastPlayedTime = currentTime;
+                let playDuration = 0; // Time spent on the mini-games site in milliseconds
+                let totalCoinsEarned = 0;
+
+                const rewardInterval = setInterval(() => {
+                    playDuration += 60000; // Increment play time by 1 minute
+                    const coinsEarned = Math.min(playDuration / 60000 * 1000, 60000); // Max 60,000 coins
+                    coinBalance += coinsEarned;
+                    totalCoinsEarned += coinsEarned;
+                    document.getElementById('coin-balance').textContent = coinBalance;
+                    saveUserData();
+                }, 60000); // Check every minute
+
+                setTimeout(() => {
+                    clearInterval(rewardInterval);
+                    alert(`You have earned ${totalCoinsEarned} BERKS for playing Mini Games!`);
+                }, 60 * 60 * 1000); // Stop after 1 hour
+            } else {
+                const remainingTime = Math.ceil((eightHoursInMillis - (currentTime - lastPlayedTime)) / (60 * 60 * 1000));
+                alert(`You can play Mini Games again in ${remainingTime} hours.`);
+            }
+        }
+
         function exportData() {
-            const data = btoa(JSON.stringify({ userId, coinBalance, tasks, inviteStartTime }));
+            const data = btoa(JSON.stringify({ userId, coinBalance, tasks, inviteStartTime, lastPlayedTime }));
             const exportDiv = document.getElementById('exported-data');
             exportDiv.textContent = data;
             const copyButton = document.createElement('button');
@@ -358,6 +392,7 @@
                 coinBalance = decodedData.coinBalance;
                 tasks = decodedData.tasks;
                 inviteStartTime = decodedData.inviteStartTime;
+                lastPlayedTime = decodedData.lastPlayedTime;
                 username = atob(userId);
                 document.getElementById('display-username').textContent = username;
                 document.getElementById('coin-balance').textContent = coinBalance;
@@ -369,7 +404,7 @@
         }
 
         function saveUserData() {
-            const data = { userId, coinBalance, tasks, inviteStartTime };
+            const data = { userId, coinBalance, tasks, inviteStartTime, lastPlayedTime };
             localStorage.setItem('userData', JSON.stringify(data));
         }
 
@@ -379,6 +414,7 @@
                 coinBalance = data.coinBalance;
                 tasks = data.tasks;
                 inviteStartTime = data.inviteStartTime;
+                lastPlayedTime = data.lastPlayedTime;
                 document.getElementById('coin-balance').textContent = coinBalance;
             }
         }
