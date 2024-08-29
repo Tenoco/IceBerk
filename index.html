@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IceBerk - Complete Tasks and Win</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #00FFAA;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 900;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #2c2c2e;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .user-info {
+            background-color: #2c2c2e;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px;
+            color: #00ffaa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .tasks {
+            text-align: left;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .task-item {
+            background-color: #3a3a3c;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .task-item:hover {
+            background-color: #00FFAA;
+        }
+
+        .task-item a {
+            color: #00FFAA;
+            text-decoration: none;
+        }
+
+        .task-item a:hover {
+            color: #00FFAA;
+        }
+
+        .disclaimer, .footer {
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        .tab-bar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #2c2c2e;
+            padding: 10px;
+            border-top: 1px solid #444;
+        }
+
+        /* Neon button styles */
+        button {
+            background-color: transparent;
+            border: 2px solid #00FFAA;
+            color: #00FFAA;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 900;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            color: #1a1a1a;
+            background-color: #00FFAA;
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 170, 0.5);
+            filter: blur(10px);
+            z-index: -1;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        button:hover:before {
+            opacity: 1;
+        }
+
+        .section {
+            display: none;
+            flex-grow: 1;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .sign-in-up {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .sign-in-up input {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            width: 80%;
+            font-family: "Courier New", Courier, monospace;
+            background-color: #3a3a3c;
+            color: #e0e0e0;
+        }
+
+        .export-import-button {
+            background-color: transparent;
+            border: 2px solid #00FFAA;
+            color: #00FFAA;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: "Courier New", Courier, monospace;
+            margin: 10px;
+            font-weight: 900;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .export-import-button:hover {
+            color: #1a1a1a;
+            background-color: #00FFAA;
+        }
+
+        .export-import-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 170, 0.5);
+            filter: blur(10px);
+            z-index: -1;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .export-import-button:hover:before {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sign-in-up" id="sign-in-up">
+        <input type="text" id="username" placeholder="Enter Username">
+        <button onclick="signUp()">Sign Up</button>
+        <button onclick="signIn()">Sign In</button>
+    </div>
+
+    <div class="header" id="app-header" style="display: none;">
+        <!-- Header content can be added here if needed -->
+    </div>
+
+    <div class="section active" id="account" style="display: none;">
+        <div class="user-info">
+            <div>Username: <span id="display-username"></span></div>
+            <div>Balance: <span id="coin-balance">0</span> BERKS</div>
+            <button class="logout-button" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+    <div class="section" id="earn" style="display: none;">
+        <h2>IceBerk</h2>
+        <p>Home for $BAK Coin Hunters</p>
+        <div class="tasks">
+            <div class="task-item">
+                <span>Task 1:</span> 
+                <a href="https://t.me/tenocoofficial" target="_blank" onclick="completeTask(1000, 'telegram')">Join Our Telegram +1,000 BERKS</a>
+            </div>
+            <div class="task-item">
+                <span>Task 2:</span> 
+                <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(2000, 'whatsapp')">Join Our WhatApp Channel +2,000 BERKS</a>
+            </div>
+            <div class="task-item">
+                <span>Task 3:</span> 
+                <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends()">Invite Friends via @iceberobot +10,000 BERKS</a>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="export" style="display: none;">
+        <button class="export-import-button" onclick="exportData()">Export Data</button>
+        <div id="exported-data"></div>
+        <button class="export-import-button" onclick="importData()">Import Data</button>
+    </div>
+
+    <div class="disclaimer">The IceBerk game is still in development... thank you for using the early access, more tasks coming soon...
+        Disclaimer: T€N0C0 has nothing to do with the contents in the promo campaign (Tasks).</div>
+    <div class="footer">© 2024 IceBerk. All rights reserved.</div>
+
+    <div class="tab-bar" id="tab-bar" style="display: none;">
+        <button class="active" onclick="showSection('account')">Account</button>
+        <button onclick="showSection('earn')">Earn</button>
+        <button onclick="showSection('export')">Export</button>
+    </div>
+
+    <script>
+        let coinBalance = 2500;
+        let userId = '';
+        let username = '';
+        let tasks = {
+            telegram: false,
+            twitter: false,
+            invite: false
+        };
+        let inviteStartTime = null;
+
+        function signUp() {
+            username = document.getElementById('username').value;
+            if (username) {
+                userId = btoa(username); // Encode username as Base64
+                document.getElementById('display-username').textContent = username;
+                document.getElementById('sign-in-up').style.display = 'none';
+                document.getElementById('app-header').style.display = 'block';
+                document.getElementById('tab-bar').style.display = 'flex';
+                document.getElementById('account').style.display = 'block';
+                saveUserData();
+            } else {
+                alert('Please enter a username.');
+            }
+        }
+
+        function signIn() {
+            const inputData = document.getElementById('username').value;
+            try {
+                username = atob(inputData); // Decode Base64
+                userId = inputData;
+                alert('Your data is secure. The game is still in beta. Join our communities for updates: \n\nTelegram: https://t.me/tenocoofficial \nWhatsApp: https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W');
+                document.getElementById('display-username').textContent = username;
+                document.getElementById('sign-in-up').style.display = 'none';
+                document.getElementById('app-header').style.display = 'block';
+                document.getElementById('tab-bar').style.display = 'flex';
+                document.getElementById('account').style.display = 'block';
+                loadUserData();
+            } catch (e) {
+                alert('Invalid data. Please enter valid encrypted data.');
+            }
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+
+            const buttons = document.querySelectorAll('.tab-bar button');
+            buttons.forEach(button => button.classList.remove('active'));
+            document.querySelector(`.tab-bar button[onclick="showSection('${sectionId}')"]`).classList.add('active');
+        }
+
+        function completeTask(coins, task) {
+            if (!tasks[task]) {
+                alert('Verifying...');
+                setTimeout(() => {
+                    coinBalance += coins;
+                    document.getElementById('coin-balance').textContent = coinBalance;
+                    tasks[task] = true;
+                    alert(`Task completed! You've earned ${coins} BERKS.`);
+                    saveUserData();
+                }, 5000);
+            } else {
+                alert('Task already completed.');
+            }
+        }
+
+        function inviteFriends() {
+            if (!tasks.invite) {
+                inviteStartTime = Date.now();
+                tasks.invite = true;
+                alert('Share the @iceberobot link with your friends. You will be rewarded after 2 hours.');
+                saveUserData();
+            } else {
+                const elapsed = (Date.now() - inviteStartTime) / (1000 * 60 * 60);
+                if (elapsed >= 2) {
+                    coinBalance += 5000;
+                    document.getElementById('coin-balance').textContent = coinBalance;
+                    alert('You have been rewarded 5,000 BERKS for inviting friends!');
+                    tasks.invite = false;
+                    saveUserData();
+                } else {
+                    alert(`Please wait for ${2 - Math.floor(elapsed)} more hours to complete this task.`);
+                }
+            }
+        }
+
+        function exportData() {
+            const data = btoa(JSON.stringify({ userId, coinBalance, tasks, inviteStartTime }));
+            const exportDiv = document.getElementById('exported-data');
+            exportDiv.textContent = data;
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy';
+            copyButton.onclick = () => navigator.clipboard.writeText(data);
+            exportDiv.appendChild(copyButton);
+        }
+
+        function importData() {
+            const data = prompt('Enter your exported data:');
+            try {
+                const decodedData = JSON.parse(atob(data));
+                userId = decodedData.userId;
+                coinBalance = decodedData.coinBalance;
+                tasks = decodedData.tasks;
+                inviteStartTime = decodedData.inviteStartTime;
+                username = atob(userId);
+                document.getElementById('display-username').textContent = username;
+                document.getElementById('coin-balance').textContent = coinBalance;
+                alert('Data imported successfully!');
+                saveUserData();
+            } catch (e) {
+                alert('Invalid data. Please enter valid exported data.');
+            }
+        }
+
+        function saveUserData() {
+            const data = { userId, coinBalance, tasks, inviteStartTime };
+            localStorage.setItem('userData', JSON.stringify(data));
+        }
+
+        function loadUserData() {
+            const data = JSON.parse(localStorage.getItem('userData'));
+            if (data && data.userId === userId) {
+                coinBalance = data.coinBalance;
+                tasks = data.tasks;
+                inviteStartTime = data.inviteStartTime;
+                document.getElementById('coin-balance').textContent = coinBalance;
+            }
+        }
+
+        function logout() {
+            userId = '';
+            username = '';
+            coinBalance = 0;
+            document.getElementById('sign-in-up').style.display = 'flex';
+            document.getElementById('app-header').style.display = 'none';
+            document.getElementById('tab-bar').style.display = 'none';
+            document.getElementById('account').style.display = 'none';
+            alert('You have logged out successfully.');
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('userData')) {
+                const data = JSON.parse(localStorage.getItem('userData'));
+                userId = data.userId;
+                username = atob(userId);
+                document.getElementById('display-username').textContent = username;
+                document.getElementById('sign-in-up').style.display = 'none';
+                document.getElementById('app-header').style.display = 'block';
+                document.getElementById('tab-bar').style.display = 'flex';
+                document.getElementById('account').style.display = 'block';
+                loadUserData();
+            }
+        };
+    </script>
+</body>
+</html>
