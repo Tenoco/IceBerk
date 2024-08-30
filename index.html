@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -217,6 +217,82 @@
             content: "• ";
             color: #00FFAA;
         }
+
+        .shop-item {
+            background-color: #3a3a3c;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            color: #e0e0e0;
+            border: 1px solid #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .shop-item:hover {
+            background-color: #4a4a4c;
+        }
+
+        .shop-item button {
+            background-color: #00FFAA;
+            color: #1a1a1a;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .shop-item button:hover {
+            background-color: #00cc88;
+        }
+
+        .shop-item button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    .quiz-container {
+            background-color: #3a3a3c;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 20px;
+            color: #e0e0e0;
+            border: 1px solid #555;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quiz-option {
+            background-color: #2c2c2e;
+            border: 1px solid #00FFAA;
+            color: #00FFAA;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quiz-option:hover {
+            background-color: #00FFAA;
+            color: #1a1a1a;
+        }
+
+        .quiz-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-option.disabled:hover {
+            background-color: #2c2c2e;
+            color: #00FFAA;
+        }
     </style>
 </head>
 <body>
@@ -249,10 +325,10 @@
         <div class="whats-new">
             <h3>What's New</h3>
             <ul>
-                <li>Improved UI with smoother animations</li>
-                <li>Enhanced security with user ID verification</li>
-                <li>Minor bug fixes for a better gaming experience</li>
-                <li>New "What's New" section to keep you updated</li>
+                <li>New Shop section with Assistant feature</li>
+                <li>Enhanced security with improved encryption</li>
+                <li>UI improvements and bug fixes</li>
+                <li>Automatic BERK generation with Assistant</li>
             </ul>
         </div>
     </div>
@@ -260,6 +336,13 @@
     <div class="section" id="earn" style="display: none;">
         <h2>IceBerk</h2>
         <p>Home for $BAK Coin Hunters</p>
+        <!-- Add the new daily quiz section -->
+        <div class="quiz-container">
+            <h3>Daily Quiz</h3>
+            <p id="quiz-question"></p>
+            <div class="quiz-options" id="quiz-options"></div>
+        </div>
+
         <div class="tasks">
             <div class="task-item">
                 <span>Task 1:</span> 
@@ -284,6 +367,18 @@
         </div>
     </div>
 
+    <div class="section" id="shop" style="display: none;">
+        <h2>Shop</h2>
+        <div class="shop-item">
+            <span>Assistant (Earns 500 BERKS/hour): 10,000 BERKS</span>
+            <button onclick="buyAssistant()" id="buyAssistantBtn">Buy</button>
+        </div>
+        <div id="assistantInfo" style="display: none;">
+            <p>You own an assistant. It generates 500 BERKS every hour.</p>
+            <p>Next payout in: <span id="assistantCountdown"></span></p>
+        </div>
+    </div>
+
     <div class="section" id="export" style="display: none;">
         <button onclick="exportData()">Export Data</button>
         <div id="exported-data"></div>
@@ -297,10 +392,20 @@
     <div class="tab-bar" id="tab-bar" style="display: none;">
         <button onclick="showSection('account')">Account</button>
         <button onclick="showSection('earn')">Earn</button>
+        <button onclick="showSection('shop')">Shop</button>
         <button onclick="showSection('export')">Export</button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+        // Add the daily quiz object
+        const dailyQuiz = {
+            question: "What is the capital of France?",
+            options: ["London", "Berlin", "Paris", "Madrid"],
+            correctAnswer: "Paris"
+        };
+
+        let quizCompleted = false;
         let coinBalance = 2500;
         let userId = '';
         let username = '';
@@ -312,6 +417,50 @@
         };
         let inviteStartTime = null;
         let lastPlayedTime = null;
+        let hasAssistant = false;
+        let lastAssistantPayout = null;
+
+        function updateQuizDisplay() {
+            const quizQuestion = document.getElementById('quiz-question');
+            const quizOptions = document.getElementById('quiz-options');
+            
+            quizQuestion.textContent = dailyQuiz.question;
+            quizOptions.innerHTML = '';
+
+            dailyQuiz.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.classList.add('quiz-option');
+                button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+                button.onclick = () => checkQuizAnswer(option);
+                if (quizCompleted) {
+                    button.classList.add('disabled');
+                    button.onclick = null;
+                }
+                quizOptions.appendChild(button);
+            });
+        }
+
+        function checkQuizAnswer(selectedAnswer) {
+            if (quizCompleted) {
+                showAlert('You have already completed the daily quiz. Please wait for the next quiz.');
+                return;
+            }
+
+            if (selectedAnswer === dailyQuiz.correctAnswer) {
+                coinBalance += 5000;
+                document.getElementById('coin-balance').textContent = coinBalance;
+                quizCompleted = true;
+                saveUserData();
+                showAlert('Correct! You have earned 5,000 BERKS.');
+                updateQuizDisplay();
+            } else {
+                showAlert('Sorry, that\'s incorrect. Try again tomorrow!');
+                quizCompleted = true;
+                saveUserData();
+                updateQuizDisplay();
+            }
+        }
+
 
         function generateUserId() {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -321,6 +470,7 @@
             }
             return result;
         }
+
 
         function showAlert(message) {
             const alert = document.getElementById('alert');
@@ -361,7 +511,8 @@
             const inputUserId = document.getElementById('userId').value;
             const inputEncryptedData = document.getElementById('encryptedData').value;
             try {
-                const decryptedData = JSON.parse(atob(inputEncryptedData));
+                const decryptedBytes = CryptoJS.AES.decrypt(inputEncryptedData, inputUserId);
+                const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
                 if (decryptedData.userId === inputUserId) {
                     userId = inputUserId;
                     username = decryptedData.username;
@@ -369,6 +520,8 @@
                     tasks = decryptedData.tasks;
                     inviteStartTime = decryptedData.inviteStartTime;
                     lastPlayedTime = decryptedData.lastPlayedTime;
+                    hasAssistant = decryptedData.hasAssistant;
+                    lastAssistantPayout = decryptedData.lastAssistantPayout;
 
                     document.getElementById('display-username').textContent = username;
                     document.getElementById('display-userId').textContent = userId;
@@ -378,6 +531,9 @@
                     document.getElementById('tab-bar').style.display = 'flex';
                     showSection('account');
                     showAlert('Signed in successfully!');
+                    if (hasAssistant) {
+                        updateAssistantCountdown();
+                    }
                 } else {
                     showAlert('Invalid User ID or encrypted data.');
                 }
@@ -390,6 +546,15 @@
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
+
+            if (sectionId === 'shop' && hasAssistant) {
+                document.getElementById('buyAssistantBtn').disabled = true;
+                document.getElementById('assistantInfo').style.display = 'block';
+                updateAssistantCountdown();
+            }
+            if (sectionId === 'earn') {
+                updateQuizDisplay();
+            }
         }
 
         function completeTask(coins, task) {
@@ -455,56 +620,63 @@
             }
         }
 
-        function exportData() {
-            const data = btoa(JSON.stringify({ userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime }));
-            const exportDiv = document.getElementById('exported-data');
-            exportDiv.textContent = data;
-            const copyButton = document.createElement('button');
-            copyButton.textContent = 'Copy';
-            copyButton.onclick = () => {
-                navigator.clipboard.writeText(data);
-                showAlert('Data copied to clipboard!');
-            };
-            exportDiv.appendChild(copyButton);
+        function buyAssistant() {
+            if (coinBalance >= 10000) {
+                coinBalance -= 10000;
+                hasAssistant = true;
+                lastAssistantPayout = Date.now();
+                document.getElementById('coin-balance').textContent = coinBalance;
+                document.getElementById('buyAssistantBtn').disabled = true;
+                document.getElementById('assistantInfo').style.display = 'block';
+                showAlert('You have successfully purchased an Assistant!');
+                saveUserData();
+                updateAssistantCountdown();
+            } else {
+                showAlert('Not enough BERKS to purchase the Assistant.');
+            }
         }
 
-        function importData() {
-            const data = prompt('Enter your exported data:');
-            try {
-                const decodedData = JSON.parse(atob(data));
-                userId = decodedData.userId;
-                username = decodedData.username;
-                coinBalance = decodedData.coinBalance;
-                tasks = decodedData.tasks;
-                inviteStartTime = decodedData.inviteStartTime;
-                lastPlayedTime = decodedData.lastPlayedTime;
-                document.getElementById('display-username').textContent = username;
-                document.getElementById('display-userId').textContent = userId;
-                document.getElementById('coin-balance').textContent = coinBalance;
-                showAlert('Data imported successfully!');
-                saveUserData();
-                showSection('account');
-            } catch (e) {
-                showAlert('Invalid data. Please enter valid exported data.');
+        function updateAssistantCountdown() {
+            if (hasAssistant) {
+                const now = Date.now();
+                const timeSinceLastPayout = now - lastAssistantPayout;
+                const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+                const minutes = Math.floor(timeUntilNextPayout / 60000);
+                const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+                document.getElementById('assistantCountdown').textContent = `${minutes}m ${seconds}s`;
+
+                if (timeUntilNextPayout === 0) {
+                    coinBalance += 500;
+                    lastAssistantPayout = now;
+                    document.getElementById('coin-balance').textContent = coinBalance;
+                    saveUserData();
+                    showAlert('Your Assistant has generated 500 BERKS!');
+                }
+
+                setTimeout(updateAssistantCountdown, 1000);
             }
         }
 
         function saveUserData() {
-            const data = { userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime };
-            localStorage.setItem('userData', btoa(JSON.stringify(data)));
+            const data = { userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime, hasAssistant, lastAssistantPayout };
+            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), userId).toString();
+            localStorage.setItem('userData', encryptedData);
         }
 
         function loadUserData() {
-            const storedData = localStorage.getItem('userData');
-            if (storedData) {
+            const encryptedData = localStorage.getItem('userData');
+            if (encryptedData) {
                 try {
-                    const data = JSON.parse(atob(storedData));
-                    userId = data.userId;
-                    username = data.username;
-                    coinBalance = data.coinBalance;
-                    tasks = data.tasks;
-                    inviteStartTime = data.inviteStartTime;
-                    lastPlayedTime = data.lastPlayedTime;
+                    const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, userId);
+                    const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+                    userId = decryptedData.userId;
+                    username = decryptedData.username;
+                    coinBalance = decryptedData.coinBalance;
+                    tasks = decryptedData.tasks;
+                    inviteStartTime = decryptedData.inviteStartTime;
+                    lastPlayedTime = decryptedData.lastPlayedTime;
+                    hasAssistant = decryptedData.hasAssistant;
+                    lastAssistantPayout = decryptedData.lastAssistantPayout;
                     document.getElementById('display-username').textContent = username;
                     document.getElementById('display-userId').textContent = userId;
                     document.getElementById('coin-balance').textContent = coinBalance;
@@ -512,9 +684,57 @@
                     document.getElementById('app-header').style.display = 'block';
                     document.getElementById('tab-bar').style.display = 'flex';
                     showSection('account');
+                    if (hasAssistant) {
+                        document.getElementById('buyAssistantBtn').disabled = true;
+                        document.getElementById('assistantInfo').style.display = 'block';
+                        updateAssistantCountdown();
+                    }
                 } catch (e) {
                     console.error('Error loading user data:', e);
                 }
+            }
+        }
+
+        function exportData() {
+            const data = { userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime, hasAssistant, lastAssistantPayout };
+            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), userId).toString();
+            const exportDiv = document.getElementById('exported-data');
+            exportDiv.textContent = encryptedData;
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy';
+            copyButton.onclick = () => {
+                navigator.clipboard.writeText(encryptedData);
+                showAlert('Data copied to clipboard!');
+            };
+            exportDiv.appendChild(copyButton);
+        }
+
+        function importData() {
+            const encryptedData = prompt('Enter your exported data:');
+            try {
+                const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, userId);
+                const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+                userId = decryptedData.userId;
+                username = decryptedData.username;
+                coinBalance = decryptedData.coinBalance;
+                tasks = decryptedData.tasks;
+                inviteStartTime = decryptedData.inviteStartTime;
+                lastPlayedTime = decryptedData.lastPlayedTime;
+                hasAssistant = decryptedData.hasAssistant;
+                lastAssistantPayout = decryptedData.lastAssistantPayout;
+                document.getElementById('display-username').textContent = username;
+                document.getElementById('display-userId').textContent = userId;
+                document.getElementById('coin-balance').textContent = coinBalance;
+                showAlert('Data imported successfully!');
+                saveUserData();
+                showSection('account');
+                if (hasAssistant) {
+                    document.getElementById('buyAssistantBtn').disabled = true;
+                    document.getElementById('assistantInfo').style.display = 'block';
+                    updateAssistantCountdown();
+                }
+            } catch (e) {
+                showAlert('Invalid data. Please enter valid exported data.');
             }
         }
 
@@ -526,6 +746,8 @@
             tasks = { telegram: false, whatsapp: false, invite: false, iceberk: false };
             inviteStartTime = null;
             lastPlayedTime = null;
+            hasAssistant = false;
+            lastAssistantPayout = null;
             document.getElementById('sign-in-up').style.display = 'flex';
             document.getElementById('app-header').style.display = 'none';
             document.getElementById('tab-bar').style.display = 'none';
@@ -549,7 +771,10 @@
             if (!userId) {
                 document.getElementById('intro-message').style.display = 'block';
             }
+            updateQuizDisplay();
         };
     </script>
 </body>
 </html>
+
+
