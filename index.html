@@ -15,9 +15,9 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .header {
@@ -63,21 +63,19 @@
 
         .task-item:hover {
             background-color: #00FFAA;
+            color: #1a1a1a;
         }
 
         .task-item a {
-            color: #00FFAA;
+            color: inherit;
             text-decoration: none;
-        }
-
-        .task-item a:hover {
-            color: #00FFAA;
         }
 
         .disclaimer, .footer {
             font-size: 0.8rem;
             color: #777;
             margin-top: 20px;
+            padding: 10px;
         }
 
         .tab-bar {
@@ -88,7 +86,6 @@
             border-top: 1px solid #444;
         }
 
-        /* Neon button styles */
         button {
             background-color: transparent;
             border: 2px solid #00FFAA;
@@ -130,6 +127,7 @@
         .section {
             display: none;
             flex-grow: 1;
+            padding: 20px;
         }
 
         .section.active {
@@ -142,6 +140,7 @@
             align-items: center;
             justify-content: center;
             flex-grow: 1;
+            padding: 20px;
         }
 
         .sign-in-up input {
@@ -150,70 +149,114 @@
             border: 1px solid #555;
             border-radius: 8px;
             width: 80%;
+            max-width: 300px;
             font-family: "Courier New", Courier, monospace;
             background-color: #3a3a3c;
             color: #e0e0e0;
         }
 
-        .export-import-button {
-            background-color: transparent;
-            border: 2px solid #00FFAA;
-            color: #00FFAA;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-family: "Courier New", Courier, monospace;
-            margin: 10px;
-            font-weight: 900;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .export-import-button:hover {
-            color: #1a1a1a;
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: #00FFAA;
-        }
-
-        .export-import-button:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 255, 170, 0.5);
-            filter: blur(10px);
-            z-index: -1;
-            transition: all 0.3s ease;
+            color: #1a1a1a;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
             opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
-        .export-import-button:hover:before {
+        .alert.show {
             opacity: 1;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro-message {
+            animation: fadeIn 0.5s ease-out;
+            background-color: rgba(0, 255, 170, 0.1);
+            border: 2px solid #00FFAA;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .whats-new {
+            background-color: #2c2c2e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .whats-new h3 {
+            color: #00FFAA;
+            margin-bottom: 10px;
+        }
+
+        .whats-new ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .whats-new li {
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
+
+        .whats-new li:before {
+            content: "• ";
+            color: #00FFAA;
+        }
     </style>
 </head>
 <body>
+    <div id="alert" class="alert"></div>
+
     <div class="sign-in-up" id="sign-in-up">
+        <div id="intro-message" class="intro-message" style="display: none;">
+            Welcome to IceBerk! Complete tasks, earn BERKS, and join our thriving community.
+        </div>
         <input type="text" id="username" placeholder="Enter Username">
-        <button onclick="signUp()">Sign Up</button>
-        <button onclick="signIn()">Sign In</button>
+        <input type="text" id="userId" placeholder="Enter User ID (for sign in)" style="display: none;">
+        <input type="password" id="encryptedData" placeholder="Enter Encrypted Data (for sign in)" style="display: none;">
+        <button onclick="signUp()" id="signUpButton">Sign Up</button>
+        <button onclick="showSignInFields()" id="showSignInButton">Sign In</button>
+        <button onclick="signIn()" id="signInButton" style="display: none;">Confirm Sign In</button>
     </div>
 
     <div class="header" id="app-header" style="display: none;">
-        <!-- Header content can be added here if needed -->
+        <h1>IceBerk</h1>
     </div>
 
-    <div class="section active" id="account" style="display: none;">
+    <div class="section" id="account" style="display: none;">
         <div class="user-info">
             <div>Username: <span id="display-username"></span></div>
+            <div>User ID: <span id="display-userId"></span></div>
+            <button onclick="copyUserId()">Copy User ID</button>
             <div>Balance: <span id="coin-balance">0</span> BERKS</div>
             <button class="logout-button" onclick="logout()">Log Out</button>
         </div>
+        <div class="whats-new">
+            <h3>What's New</h3>
+            <ul>
+                <li>Improved UI with smoother animations</li>
+                <li>Enhanced security with user ID verification</li>
+                <li>Minor bug fixes for a better gaming experience</li>
+                <li>New "What's New" section to keep you updated</li>
+            </ul>
+        </div>
     </div>
+
     <div class="section" id="earn" style="display: none;">
         <h2>IceBerk</h2>
         <p>Home for $BAK Coin Hunters</p>
@@ -224,7 +267,7 @@
             </div>
             <div class="task-item">
                 <span>Task 2:</span> 
-                <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(2000, 'whatsapp')">Join Our WhatApp Channel +2,000 BERKS</a>
+                <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(2000, 'whatsapp')">Join Our WhatsApp Channel +2,000 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 3:</span> 
@@ -240,10 +283,11 @@
             </div>
         </div>
     </div>
+
     <div class="section" id="export" style="display: none;">
-        <button class="export-import-button" onclick="exportData()">Export Data</button>
+        <button onclick="exportData()">Export Data</button>
         <div id="exported-data"></div>
-        <button class="export-import-button" onclick="importData()">Import Data</button>
+        <button onclick="importData()">Import Data</button>
     </div>
 
     <div class="disclaimer">The IceBerk game is still in development... thank you for using the early access, more tasks coming soon...
@@ -251,7 +295,7 @@
     <div class="footer">© 2024 IceBerk. All rights reserved.</div>
 
     <div class="tab-bar" id="tab-bar" style="display: none;">
-        <button class="active" onclick="showSection('account')">Account</button>
+        <button onclick="showSection('account')">Account</button>
         <button onclick="showSection('earn')">Earn</button>
         <button onclick="showSection('export')">Export</button>
     </div>
@@ -269,35 +313,76 @@
         let inviteStartTime = null;
         let lastPlayedTime = null;
 
+        function generateUserId() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 15; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        function showAlert(message) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.classList.add('show');
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 3000);
+        }
+
         function signUp() {
             username = document.getElementById('username').value;
             if (username) {
-                userId = btoa(username); // Encode username as Base64
+                userId = generateUserId();
                 document.getElementById('display-username').textContent = username;
+                document.getElementById('display-userId').textContent = userId;
                 document.getElementById('sign-in-up').style.display = 'none';
                 document.getElementById('app-header').style.display = 'block';
                 document.getElementById('tab-bar').style.display = 'flex';
-                document.getElementById('account').style.display = 'block';
+                showSection('account');
                 saveUserData();
+                showAlert('Account created successfully!');
             } else {
-                alert('Please enter a username.');
+                showAlert('Please enter a username.');
             }
         }
 
+        function showSignInFields() {
+            document.getElementById('username').style.display = 'none';
+            document.getElementById('userId').style.display = 'block';
+            document.getElementById('encryptedData').style.display = 'block';
+            document.getElementById('signUpButton').style.display = 'none';
+            document.getElementById('showSignInButton').style.display = 'none';
+            document.getElementById('signInButton').style.display = 'block';
+        }
+
         function signIn() {
-            const inputData = document.getElementById('username').value;
+            const inputUserId = document.getElementById('userId').value;
+            const inputEncryptedData = document.getElementById('encryptedData').value;
             try {
-                username = atob(inputData); // Decode Base64
-                userId = inputData;
-                alert('Your data is secure. The game is still in beta. Join our communities for updates: \n\nTelegram: https://t.me/tenocoofficial \nWhatsApp: https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W');
-                document.getElementById('display-username').textContent = username;
-                document.getElementById('sign-in-up').style.display = 'none';
-                document.getElementById('app-header').style.display = 'block';
-                document.getElementById('tab-bar').style.display = 'flex';
-                document.getElementById('account').style.display = 'block';
-                loadUserData();
+                const decryptedData = JSON.parse(atob(inputEncryptedData));
+                if (decryptedData.userId === inputUserId) {
+                    userId = inputUserId;
+                    username = decryptedData.username;
+                    coinBalance = decryptedData.coinBalance;
+                    tasks = decryptedData.tasks;
+                    inviteStartTime = decryptedData.inviteStartTime;
+                    lastPlayedTime = decryptedData.lastPlayedTime;
+
+                    document.getElementById('display-username').textContent = username;
+                    document.getElementById('display-userId').textContent = userId;
+                    document.getElementById('coin-balance').textContent = coinBalance;
+                    document.getElementById('sign-in-up').style.display = 'none';
+                    document.getElementById('app-header').style.display = 'block';
+                    document.getElementById('tab-bar').style.display = 'flex';
+                    showSection('account');
+                    showAlert('Signed in successfully!');
+                } else {
+                    showAlert('Invalid User ID or encrypted data.');
+                }
             } catch (e) {
-                alert('Invalid data. Please enter valid encrypted data.');
+                showAlert('Invalid encrypted data. Please try again.');
             }
         }
 
@@ -305,24 +390,20 @@
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
-
-            const buttons = document.querySelectorAll('.tab-bar button');
-            buttons.forEach(button => button.classList.remove('active'));
-            document.querySelector(`.tab-bar button[onclick="showSection('${sectionId}')"]`).classList.add('active');
         }
 
         function completeTask(coins, task) {
             if (!tasks[task]) {
-                alert('Verifying...');
+                showAlert('Verifying...');
                 setTimeout(() => {
                     coinBalance += coins;
                     document.getElementById('coin-balance').textContent = coinBalance;
                     tasks[task] = true;
-                    alert(`Task completed! You've earned ${coins} BERKS.`);
+                    showAlert(`Task completed! You've earned ${coins} BERKS.`);
                     saveUserData();
-                }, 5000);
+                }, 2000);
             } else {
-                alert('Task already completed.');
+                showAlert('Task already completed.');
             }
         }
 
@@ -330,18 +411,18 @@
             if (!tasks.invite) {
                 inviteStartTime = Date.now();
                 tasks.invite = true;
-                alert('Share the @iceberobot link with your friends. You will be rewarded after 2 hours.');
+                showAlert('Share the @iceberobot link with your friends. You will be rewarded after 2 hours.');
                 saveUserData();
             } else {
                 const elapsed = (Date.now() - inviteStartTime) / (1000 * 60 * 60);
                 if (elapsed >= 2) {
-                    coinBalance += 5000;
+                    coinBalance += 10000;
                     document.getElementById('coin-balance').textContent = coinBalance;
-                    alert('You have been rewarded 5,000 BERKS for inviting friends!');
+                    showAlert('You have been rewarded 10,000 BERKS for inviting friends!');
                     tasks.invite = false;
                     saveUserData();
                 } else {
-                    alert(`Please wait for ${2 - Math.floor(elapsed)} more hours to complete this task.`);
+                    showAlert(`Please wait for ${Math.ceil(2 - elapsed)} more hours to complete this task.`);
                 }
             }
         }
@@ -352,35 +433,38 @@
 
             if (!lastPlayedTime || (currentTime - lastPlayedTime) >= eightHoursInMillis) {
                 lastPlayedTime = currentTime;
-                let playDuration = 0; // Time spent on the mini-games site in milliseconds
+                let playDuration = 0;
                 let totalCoinsEarned = 0;
 
                 const rewardInterval = setInterval(() => {
-                    playDuration += 60000; // Increment play time by 1 minute
-                    const coinsEarned = Math.min(playDuration / 60000 * 1000, 60000); // Max 60,000 coins
+                    playDuration += 60000;
+                    const coinsEarned = Math.min(playDuration / 60000 * 1000, 60000);
                     coinBalance += coinsEarned;
                     totalCoinsEarned += coinsEarned;
-                    document.getElementById('coin-balance').textContent = coinBalance;
+                    document.getElementById('coin-balance').textContent = Math.floor(coinBalance);
                     saveUserData();
-                }, 60000); // Check every minute
+                }, 60000);
 
                 setTimeout(() => {
                     clearInterval(rewardInterval);
-                    alert(`You have earned ${totalCoinsEarned} BERKS for playing Mini Games!`);
-                }, 60 * 60 * 1000); // Stop after 1 hour
+                    showAlert(`You have earned ${Math.floor(totalCoinsEarned)} BERKS for playing Mini Games!`);
+                }, 60 * 60 * 1000);
             } else {
                 const remainingTime = Math.ceil((eightHoursInMillis - (currentTime - lastPlayedTime)) / (60 * 60 * 1000));
-                alert(`You can play Mini Games again in ${remainingTime} hours.`);
+                showAlert(`You can play Mini Games again in ${remainingTime} hours.`);
             }
         }
 
         function exportData() {
-            const data = btoa(JSON.stringify({ userId, coinBalance, tasks, inviteStartTime, lastPlayedTime }));
+            const data = btoa(JSON.stringify({ userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime }));
             const exportDiv = document.getElementById('exported-data');
             exportDiv.textContent = data;
             const copyButton = document.createElement('button');
             copyButton.textContent = 'Copy';
-            copyButton.onclick = () => navigator.clipboard.writeText(data);
+            copyButton.onclick = () => {
+                navigator.clipboard.writeText(data);
+                showAlert('Data copied to clipboard!');
+            };
             exportDiv.appendChild(copyButton);
         }
 
@@ -389,58 +473,81 @@
             try {
                 const decodedData = JSON.parse(atob(data));
                 userId = decodedData.userId;
+                username = decodedData.username;
                 coinBalance = decodedData.coinBalance;
                 tasks = decodedData.tasks;
                 inviteStartTime = decodedData.inviteStartTime;
                 lastPlayedTime = decodedData.lastPlayedTime;
-                username = atob(userId);
                 document.getElementById('display-username').textContent = username;
+                document.getElementById('display-userId').textContent = userId;
                 document.getElementById('coin-balance').textContent = coinBalance;
-                alert('Data imported successfully!');
+                showAlert('Data imported successfully!');
                 saveUserData();
+                showSection('account');
             } catch (e) {
-                alert('Invalid data. Please enter valid exported data.');
+                showAlert('Invalid data. Please enter valid exported data.');
             }
         }
 
         function saveUserData() {
-            const data = { userId, coinBalance, tasks, inviteStartTime, lastPlayedTime };
-            localStorage.setItem('userData', JSON.stringify(data));
+            const data = { userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime };
+            localStorage.setItem('userData', btoa(JSON.stringify(data)));
         }
 
         function loadUserData() {
-            const data = JSON.parse(localStorage.getItem('userData'));
-            if (data && data.userId === userId) {
-                coinBalance = data.coinBalance;
-                tasks = data.tasks;
-                inviteStartTime = data.inviteStartTime;
-                lastPlayedTime = data.lastPlayedTime;
-                document.getElementById('coin-balance').textContent = coinBalance;
+            const storedData = localStorage.getItem('userData');
+            if (storedData) {
+                try {
+                    const data = JSON.parse(atob(storedData));
+                    userId = data.userId;
+                    username = data.username;
+                    coinBalance = data.coinBalance;
+                    tasks = data.tasks;
+                    inviteStartTime = data.inviteStartTime;
+                    lastPlayedTime = data.lastPlayedTime;
+                    document.getElementById('display-username').textContent = username;
+                    document.getElementById('display-userId').textContent = userId;
+                    document.getElementById('coin-balance').textContent = coinBalance;
+                    document.getElementById('sign-in-up').style.display = 'none';
+                    document.getElementById('app-header').style.display = 'block';
+                    document.getElementById('tab-bar').style.display = 'flex';
+                    showSection('account');
+                } catch (e) {
+                    console.error('Error loading user data:', e);
+                }
             }
         }
 
         function logout() {
+            localStorage.removeItem('userData');
             userId = '';
             username = '';
             coinBalance = 0;
+            tasks = { telegram: false, whatsapp: false, invite: false, iceberk: false };
+            inviteStartTime = null;
+            lastPlayedTime = null;
             document.getElementById('sign-in-up').style.display = 'flex';
             document.getElementById('app-header').style.display = 'none';
             document.getElementById('tab-bar').style.display = 'none';
             document.getElementById('account').style.display = 'none';
-            alert('You have logged out successfully.');
+            document.getElementById('username').style.display = 'block';
+            document.getElementById('userId').style.display = 'none';
+            document.getElementById('encryptedData').style.display = 'none';
+            document.getElementById('signUpButton').style.display = 'block';
+            document.getElementById('showSignInButton').style.display = 'block';
+            document.getElementById('signInButton').style.display = 'none';
+            showAlert('You have logged out successfully.');
+        }
+
+        function copyUserId() {
+            navigator.clipboard.writeText(userId);
+            showAlert('User ID copied to clipboard!');
         }
 
         window.onload = () => {
-            if (localStorage.getItem('userData')) {
-                const data = JSON.parse(localStorage.getItem('userData'));
-                userId = data.userId;
-                username = atob(userId);
-                document.getElementById('display-username').textContent = username;
-                document.getElementById('sign-in-up').style.display = 'none';
-                document.getElementById('app-header').style.display = 'block';
-                document.getElementById('tab-bar').style.display = 'flex';
-                document.getElementById('account').style.display = 'block';
-                loadUserData();
+            loadUserData();
+            if (!userId) {
+                document.getElementById('intro-message').style.display = 'block';
             }
         };
     </script>
