@@ -12,6 +12,8 @@ let inviteStartTime = null;
 let lastPlayedTime = null;
 let hasAssistant = false;
 let lastAssistantPayout = null;
+let hasIceFactory = false; // New variable to track Ice Factory ownership
+let lastIceFactoryPayout = null; // New variable to track last Ice Factory payout
 
 // Function to generate a random user ID
 function generateUserId() {
@@ -30,7 +32,7 @@ function showAlert(message) {
     alert.classList.add('show');
     setTimeout(() => {
         alert.classList.remove('show');
-    }, 5000); // Alert lasts for 5 seconds
+    }, 15000); // Alert lasts for 15 seconds
 }
 
 // Function to set a cookie
@@ -93,6 +95,9 @@ function signIn() {
             if (hasAssistant) {
                 updateAssistantCountdown();
             }
+            if (hasIceFactory) {
+                updateIceFactoryCountdown();
+            }
         } else {
             showAlert('Invalid User ID or encrypted data.');
         }
@@ -111,6 +116,8 @@ function loadUserDataFromDecrypted(decryptedData) {
     lastPlayedTime = decryptedData.lastPlayedTime;
     hasAssistant = decryptedData.hasAssistant;
     lastAssistantPayout = decryptedData.lastAssistantPayout;
+    hasIceFactory = decryptedData.hasIceFactory; // Load Ice Factory data
+    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout; // Load last Ice Factory payout
 
     document.getElementById('display-username').textContent = username;
     document.getElementById('display-userId').textContent = userId;
@@ -128,10 +135,17 @@ function showSection(sectionId) {
     sections.forEach(section => section.style.display = 'none');
     document.getElementById(sectionId).style.display = 'block';
 
-    if (sectionId === 'shop' && hasAssistant) {
-        document.getElementById('buyAssistantBtn').disabled = true;
-        document.getElementById('assistantInfo').style.display = 'block';
-        updateAssistantCountdown();
+    if (sectionId === 'shop') {
+        if (hasAssistant) {
+            document.getElementById('buyAssistantBtn').disabled = true;
+            document.getElementById('assistantInfo').style.display = 'block';
+            updateAssistantCountdown();
+        }
+        if (hasIceFactory) {
+            document.getElementById('buyIceFactoryBtn').disabled = true;
+            document.getElementById('iceFactoryInfo').style.display = 'block';
+            updateIceFactoryCountdown();
+        }
     }
 }
 
@@ -218,6 +232,23 @@ function buyAssistant() {
     }
 }
 
+// Function to buy an Ice Factory
+function buyIceFactory() {
+    if (coinBalance >= 30000) {
+        coinBalance -= 30000;
+        hasIceFactory = true;
+        lastIceFactoryPayout = Date.now();
+        document.getElementById('coin-balance').textContent = coinBalance;
+        document.getElementById('buyIceFactoryBtn').disabled = true;
+        document.getElementById('iceFactoryInfo').style.display = 'block';
+        showAlert('You have successfully purchased an Ice Factory!');
+        saveUserData();
+        updateIceFactoryCountdown();
+    } else {
+        showAlert('Not enough BERKS to purchase the Ice Factory.');
+    }
+}
+
 // Function to update assistant countdown
 function updateAssistantCountdown() {
     if (hasAssistant) {
@@ -240,6 +271,28 @@ function updateAssistantCountdown() {
     }
 }
 
+// Function to update Ice Factory countdown
+function updateIceFactoryCountdown() {
+    if (hasIceFactory) {
+        const now = Date.now();
+        const timeSinceLastPayout = now - lastIceFactoryPayout;
+        const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+        const minutes = Math.floor(timeUntilNextPayout / 60000);
+        const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+        document.getElementById('iceFactoryCountdown').textContent = `${minutes}m ${seconds}s`;
+
+        if (timeUntilNextPayout === 0) {
+            coinBalance += 8000; // Ice Factory generates 8000 BERKS
+            lastIceFactoryPayout = now;
+            document.getElementById('coin-balance').textContent = coinBalance;
+            saveUserData();
+            showAlert('Your Ice Factory has generated 8,000 BERKS!');
+        }
+
+        setTimeout(updateIceFactoryCountdown, 1000);
+    }
+}
+
 // Function to save user data (encrypted) using cookies
 function saveUserData() {
     try {
@@ -255,7 +308,9 @@ function saveUserData() {
             inviteStartTime,
             lastPlayedTime,
             hasAssistant,
-            lastAssistantPayout
+            lastAssistantPayout,
+            hasIceFactory, // Save Ice Factory data
+            lastIceFactoryPayout // Save last Ice Factory payout
         };
 
         const jsonData = JSON.stringify(data);
@@ -289,6 +344,11 @@ function loadUserData() {
                 document.getElementById('assistantInfo').style.display = 'block';
                 updateAssistantCountdown();
             }
+            if (hasIceFactory) {
+                document.getElementById('buyIceFactoryBtn').disabled = true;
+                document.getElementById('iceFactoryInfo').style.display = 'block';
+                updateIceFactoryCountdown();
+            }
         } catch (e) {
             console.error('Error loading user data:', e);
             showAlert('Error loading user data. Please sign in again or reset your data.');
@@ -298,7 +358,18 @@ function loadUserData() {
 
 // Function to export data
 function exportData() {
-    const data = { userId, username, coinBalance, tasks, inviteStartTime, lastPlayedTime, hasAssistant, lastAssistantPayout };
+    const data = {
+        userId,
+        username,
+        coinBalance,
+        tasks,
+        inviteStartTime,
+        lastPlayedTime,
+        hasAssistant,
+        lastAssistantPayout,
+        hasIceFactory,
+        lastIceFactoryPayout
+    };
     const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), userId).toString();
     const exportDiv = document.getElementById('exported-data');
     exportDiv.textContent = encryptedData;
@@ -324,6 +395,11 @@ function importData() {
             document.getElementById('assistantInfo').style.display = 'block';
             updateAssistantCountdown();
         }
+        if (hasIceFactory) {
+            document.getElementById('buyIceFactoryBtn').disabled = true;
+            document.getElementById('iceFactoryInfo').style.display = 'block';
+            updateIceFactoryCountdown();
+        }
     } catch (e) {
         showAlert('Invalid data. Please enter valid exported data.');
     }
@@ -341,6 +417,8 @@ function logout() {
     lastPlayedTime = null;
     hasAssistant = false;
     lastAssistantPayout = null;
+    hasIceFactory = false; // Reset Ice Factory data
+    lastIceFactoryPayout = null; // Reset last Ice Factory payout
     document.getElementById('sign-in-up').style.display = 'flex';
     document.getElementById('app-header').style.display = 'none';
     document.getElementById('tab-bar').style.display = 'none';
