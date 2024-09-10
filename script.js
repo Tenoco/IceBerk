@@ -438,6 +438,49 @@ function copyUserId() {
     showAlert('User ID copied to clipboard!');
 }
 
+// Function to handle quiz answer selection
+function selectAnswer(option) {
+    const lastQuizDate = getCookie('lastQuizDate');
+    const today = new Date().toLocaleDateString();
+
+    // Check if the quiz has already been played today
+    if (lastQuizDate === today) {
+        showAlert('You have already played the quiz today. Please try again tomorrow.');
+        return;
+    }
+
+    // Save the current date as the last played date
+    setCookie('lastQuizDate', today, 1); // Expires in 1 day
+
+    // Logic to handle the quiz answer
+    let correctAnswer = 'A'; // For this example, assume the correct answer is A
+    if (option === correctAnswer) {
+        coinBalance += 10000; // Reward for correct answer
+        document.getElementById('coin-balance').textContent = coinBalance;
+        showAlert('Correct! You have earned 10,000 BERKS.');
+    } else {
+        showAlert('Incorrect answer. Better luck next time!');
+    }
+
+    saveUserData();
+}
+
+// Add this in the window.onload function to ensure user data is loaded correctly
+window.onload = () => {
+    loadUserData();
+
+    // Disable the quiz section if it has already been played today
+    const lastQuizDate = getCookie('lastQuizDate');
+    const today = new Date().toLocaleDateString();
+    if (lastQuizDate === today) {
+        document.querySelectorAll('.quiz-options button').forEach(button => {
+            button.disabled = true;
+        });
+        showAlert('You have already played the quiz today. Please try again tomorrow.');
+    }
+};
+
+
 // Load user data when the window loads
 window.onload = () => {
     loadUserData();
