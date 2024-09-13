@@ -453,7 +453,7 @@ function selectAnswer(option) {
     setCookie('lastQuizDate', today, 1); // Expires in 1 day
 
     // Logic to handle the quiz answer
-    let correctAnswer = 'B'; // For this example, assume the correct answer is A
+    let correctAnswer = 'D'; // For this example, assume the correct answer is A
     if (option === correctAnswer) {
         coinBalance += 10000; // Reward for correct answer
         document.getElementById('coin-balance').textContent = coinBalance;
