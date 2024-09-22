@@ -32,18 +32,15 @@
             <div>User ID: <span id="display-userId"></span></div>
             <button onclick="copyUserId()">Copy User ID</button>
             <div>Balance: <span id="coin-balance">0</span> BERKS</div>
-            <div>Total Earnings per Hour: <span id="total-earnings-per-hour">0</span> BERKS</div>
             <button class="logout-button" onclick="logout()">Log Out</button>
-        </div>
-        <div class="annoucement">
-            <h3>‼️iMPORTANT ANNOUNCEMENT‼️</h3>
-            <p>We have noticed that some users are cheating on tasks. As IceBerk grows, users will get chances to earn real money 💸. However, we will begin banning 🚫 users caught cheating during our occasional airdrops 💵. Stay fair, play right, and keep earning! ✨</p>
         </div>
         <div class="whats-new">
             <h3>What's New</h3>
             <ul>
-                <li>Sleek, Updated UI Layouts! 🏗️ </li>
-                <li>A Brand New Quiz Section to Earn More BERKS! 💵</li>
+                <li>New Shop section with Assistant feature</li>
+                <li>Enhanced security with improved encryption</li>
+                <li>UI improvements and bug fixes</li>
+                <li>Automatic BERK generation with Assistant</li>
             </ul>
         </div>
     </div>
@@ -51,58 +48,42 @@
     <div class="section" id="earn" style="display: none;">
         <h2>IceBerk</h2>
         <p>Home for $BAK Coin Hunters</p>
-
-        <!-- Mini Games Button -->
-        <div class="task-item">
-            <span>Mini Games:</span>
-            <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()">Play Mini Games</a>
-        </div>
-
-        <!-- Daily Quiz Section -->
-        <div class="quiz-section">
-            <h3>Daily Quiz</h3>
-            <p id="quiz-question">What is the capital of Nigeria?</p>
-            <div class="quiz-options">
-                <button onclick="selectAnswer('A')">A. Lagos</button>
-                <button onclick="selectAnswer('B')">B. Abuja</button>
-                <button onclick="selectAnswer('C')">C. Kaduna</button>
-                <button onclick="selectAnswer('D')">D. Kano</button>
-            </div>
-        </div>
-
-        <!-- Task List -->
         <div class="tasks">
             <div class="task-item">
                 <span>Task 1:</span> 
-                <a href="https://t.me/tenocoofficial" target="_blank" onclick="completeTask(1000, 'telegram'); return true;">Join Our Telegram +1,000 BERKS</a>
+                <a href="https://t.me/tenocoofficial" target="_blank" onclick="completeTask(1000, 'telegram')">Join Our Telegram +1,000 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 2:</span> 
-                <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(2000, 'whatsapp'); return true;">Join Our WhatsApp Channel +2,000 BERKS</a>
+                <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(2000, 'whatsapp')">Join Our WhatsApp Channel +2,000 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 3:</span> 
-                <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends(); return true;">Invite Friends via @iceberobot +10,000 BERKS</a>
+                <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends()">Invite Friends via @iceberobot +10,000 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 4:</span> 
-                <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(1500, 'iceberk'); return true;">Join the IceBerk Community +1,500 BERKS</a>
+                <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(1500, 'iceberk')">Join the IceBerk Community +1,500 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 5:</span> 
-                <a href="https://t.me/nim_tech" target="_blank" onclick="completeTask(1000, 'nimgine'); return true;">Join the Nimgine Tech Community on Telegram +1,000 BERKS</a>
+                <a href="https://t.me/nim_tech" target="_blank" onclick="completeTask(1000, 'nimgine')">Join the Nimgine Tech Community on Telegram +1,000 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 6:</span> 
-                <a href="https://twitter.com/TEN0C0" target="_blank" onclick="completeTask(2500, 'twitter'); return true;">Follow us on X (Twitter) +2,500 BERKS</a>
+                <a href="https://twitter.com/TEN0C0" target="_blank" onclick="completeTask(2500, 'twitter')">Follow us on X (Twitter) +2,500 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 7:</span> 
-                <a href="http://tenoco.github.io/TEN0C0/" target="_blank" onclick="completeTask(500, 'aboutus'); return true;">View our about us page +500 BERKS</a>
+                <a href="http://tenoco.github.io/TEN0C0/" target="_blank" onclick="completeTask(500, 'aboutus')">View our about us page +500 BERKS</a>
             </div>
             <div class="task-item">
                 <span>Task 8:</span> 
-                <a href="https://t.me/share/url?url=#IceBerk" target="_blank" onclick="completeTask(5000, 'telegramstory'); return true;">Post a story on Telegram with #IceBerk +5,000 BERKS</a>
+                <a href="https://t.me/share/url?url=#IceBerk" target="_blank" onclick="completeTask(5000, 'telegramstory')">Post a story on Telegram with #IceBerk +5,000 BERKS</a>
+            </div>
+            <div class="task-item">
+                <span>Mini Games:</span>
+                <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()">Play Mini Games</a>
             </div>
         </div>
     </div>
@@ -110,60 +91,20 @@
     <div class="section" id="shop" style="display: none;">
         <h2>Shop</h2>
         <div class="shop-item">
-            <span>Assistant (Earns 1500 BERKS/hour): 100,000 BERKS</span>
+            <span>Assistant (Earns 500 BERKS/hour): 10,000 BERKS</span>
             <button onclick="buyAssistant()" id="buyAssistantBtn">Buy</button>
         </div>
         <div id="assistantInfo" style="display: none;">
-            <p>You own an assistant. It generates 1500 BERKS every hour.</p>
+            <p>You own an assistant. It generates 500 BERKS every hour.</p>
             <p>Next payout in: <span id="assistantCountdown"></span></p>
         </div>
         <div class="shop-item">
-            <span>Ice Factory (Earns 8,000 BERKS/hour): 350,000 BERKS</span>
+            <span>Ice Factory (Earns 8,000 BERKS/hour): 30,000 BERKS</span>
             <button onclick="buyIceFactory()" id="buyIceFactoryBtn">Buy</button>
         </div>
         <div id="iceFactoryInfo" style="display: none;">
             <p>You own an Ice Factory. It generates 8,000 BERKS every hour.</p>
             <p>Next payout in: <span id="iceFactoryCountdown"></span></p>
-        </div>
-        <div class="shop-item">
-            <span>IceMiner (Earns 5,000 BERKS/hour): 200,000 BERKS</span>
-            <button onclick="buyIceMiner()" id="buyIceMinerBtn">Buy</button>
-        </div>
-        <div id="iceMinerInfo" style="display: none;">
-            <p>You own an IceMiner. It generates 5,000 BERKS every hour.</p>
-            <p>Next payout in: <span id="iceMinerCountdown"></span></p>
-        </div>
-        <div class="shop-item">
-            <span>Task Manager (Earns 3,000 BERKS/hour): 150,000 BERKS</span>
-            <button onclick="buyTaskManager()" id="buyTaskManagerBtn">Buy</button>
-        </div>
-        <div id="taskManagerInfo" style="display: none;">
-            <p>You own a Task Manager. It generates 3,000 BERKS every hour.</p>
-            <p>Next payout in: <span id="taskManagerCountdown"></span></p>
-        </div>
-        <div class="shop-item">
-            <span>BERK Vault (Earns 10,000 BERKS/hour): 500,000 BERKS</span>
-            <button onclick="buyBerkVault()" id="buyBerkVaultBtn">Buy</button>
-        </div>
-        <div id="berkVaultInfo" style="display: none;">
-            <p>You own a BERK Vault. It generates 10,000 BERKS every hour.</p>
-            <p>Next payout in: <span id="berkVaultCountdown"></span></p>
-        </div>
-        <div class="shop-item">
-            <span>IceBot (Earns 6,500 BERKS/hour): 250,000 BERKS</span>
-            <button onclick="buyIceBot()" id="buyIceBotBtn">Buy</button>
-        </div>
-        <div id="iceBotInfo" style="display: none;">
-            <p>You own an IceBot. It generates 6,500 BERKS every hour.</p>
-            <p>Next payout in: <span id="iceBotCountdown"></span></p>
-        </div>
-        <div class="shop-item">
-            <span>Frost Forge (Earns 50,000 BERKS/hour): 2,000,000 BERKS</span>
-            <button onclick="buyFrostForge()" id="buyFrostForgeBtn">Buy</button>
-        </div>
-        <div id="frostForgeInfo" style="display: none;">
-            <p>You own a Frost Forge. It generates 50,000 BERKS every hour.</p>
-            <p>Next payout in: <span id="frostForgeCountdown"></span></p>
         </div>
     </div>
 
