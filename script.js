@@ -12,8 +12,18 @@ let inviteStartTime = null;
 let lastPlayedTime = null;
 let hasAssistant = false;
 let lastAssistantPayout = null;
-let hasIceFactory = false; // New variable to track Ice Factory ownership
-let lastIceFactoryPayout = null; // New variable to track last Ice Factory payout
+let hasIceFactory = false;
+let lastIceFactoryPayout = null;
+let hasIceMiner = false;
+let lastIceMinerPayout = null;
+let hasTaskManager = false;
+let lastTaskManagerPayout = null;
+let hasBerkVault = false;
+let lastBerkVaultPayout = null;
+let hasIceBot = false;
+let lastIceBotPayout = null;
+let hasFrostForge = false;
+let lastFrostForgePayout = null;
 
 // Function to generate a random user ID
 function generateUserId() {
@@ -92,12 +102,8 @@ function signIn() {
         if (decryptedData.userId === inputUserId) {
             loadUserDataFromDecrypted(decryptedData);
             showAlert('Signed in successfully!');
-            if (hasAssistant) {
-                updateAssistantCountdown();
-            }
-            if (hasIceFactory) {
-                updateIceFactoryCountdown();
-            }
+            updateEarningsCountdowns();
+            calculateTotalEarningsPerHour();
         } else {
             showAlert('Invalid User ID or encrypted data.');
         }
@@ -116,8 +122,18 @@ function loadUserDataFromDecrypted(decryptedData) {
     lastPlayedTime = decryptedData.lastPlayedTime;
     hasAssistant = decryptedData.hasAssistant;
     lastAssistantPayout = decryptedData.lastAssistantPayout;
-    hasIceFactory = decryptedData.hasIceFactory; // Load Ice Factory data
-    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout; // Load last Ice Factory payout
+    hasIceFactory = decryptedData.hasIceFactory;
+    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout;
+    hasIceMiner = decryptedData.hasIceMiner;
+    lastIceMinerPayout = decryptedData.lastIceMinerPayout;
+    hasTaskManager = decryptedData.hasTaskManager;
+    lastTaskManagerPayout = decryptedData.lastTaskManagerPayout;
+    hasBerkVault = decryptedData.hasBerkVault;
+    lastBerkVaultPayout = decryptedData.lastBerkVaultPayout;
+    hasIceBot = decryptedData.hasIceBot;
+    lastIceBotPayout = decryptedData.lastIceBotPayout;
+    hasFrostForge = decryptedData.hasFrostForge;
+    lastFrostForgePayout = decryptedData.lastFrostForgePayout;
 
     document.getElementById('display-username').textContent = username;
     document.getElementById('display-userId').textContent = userId;
@@ -136,17 +152,32 @@ function showSection(sectionId) {
     document.getElementById(sectionId).style.display = 'block';
 
     if (sectionId === 'shop') {
-        if (hasAssistant) {
-            document.getElementById('buyAssistantBtn').disabled = true;
-            document.getElementById('assistantInfo').style.display = 'block';
-            updateAssistantCountdown();
-        }
-        if (hasIceFactory) {
-            document.getElementById('buyIceFactoryBtn').disabled = true;
-            document.getElementById('iceFactoryInfo').style.display = 'block';
-            updateIceFactoryCountdown();
-        }
+        updateShopButtons();
     }
+}
+
+// Function to update shop buttons based on ownership
+function updateShopButtons() {
+    document.getElementById('buyAssistantBtn').disabled = hasAssistant;
+    document.getElementById('assistantInfo').style.display = hasAssistant ? 'block' : 'none';
+
+    document.getElementById('buyIceFactoryBtn').disabled = hasIceFactory;
+    document.getElementById('iceFactoryInfo').style.display = hasIceFactory ? 'block' : 'none';
+
+    document.getElementById('buyIceMinerBtn').disabled = hasIceMiner;
+    document.getElementById('iceMinerInfo').style.display = hasIceMiner ? 'block' : 'none';
+
+    document.getElementById('buyTaskManagerBtn').disabled = hasTaskManager;
+    document.getElementById('taskManagerInfo').style.display = hasTaskManager ? 'block' : 'none';
+
+    document.getElementById('buyBerkVaultBtn').disabled = hasBerkVault;
+    document.getElementById('berkVaultInfo').style.display = hasBerkVault ? 'block' : 'none';
+
+    document.getElementById('buyIceBotBtn').disabled = hasIceBot;
+    document.getElementById('iceBotInfo').style.display = hasIceBot ? 'block' : 'none';
+
+    document.getElementById('buyFrostForgeBtn').disabled = hasFrostForge;
+    document.getElementById('frostForgeInfo').style.display = hasFrostForge ? 'block' : 'none';
 }
 
 // Function to complete a task
@@ -217,8 +248,8 @@ function playMiniGames() {
 
 // Function to buy an assistant
 function buyAssistant() {
-    if (coinBalance >= 10000) {
-        coinBalance -= 10000;
+    if (coinBalance >= 100000) {
+        coinBalance -= 100000;
         hasAssistant = true;
         lastAssistantPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -227,6 +258,7 @@ function buyAssistant() {
         showAlert('You have successfully purchased an Assistant!');
         saveUserData();
         updateAssistantCountdown();
+        calculateTotalEarningsPerHour();
     } else {
         showAlert('Not enough BERKS to purchase the Assistant.');
     }
@@ -234,8 +266,8 @@ function buyAssistant() {
 
 // Function to buy an Ice Factory
 function buyIceFactory() {
-    if (coinBalance >= 30000) {
-        coinBalance -= 30000;
+    if (coinBalance >= 350000) {
+        coinBalance -= 350000;
         hasIceFactory = true;
         lastIceFactoryPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -244,8 +276,99 @@ function buyIceFactory() {
         showAlert('You have successfully purchased an Ice Factory!');
         saveUserData();
         updateIceFactoryCountdown();
+        calculateTotalEarningsPerHour();
     } else {
         showAlert('Not enough BERKS to purchase the Ice Factory.');
+    }
+}
+
+// Function to buy an Ice Miner
+function buyIceMiner() {
+    if (coinBalance >= 200000) {
+        coinBalance -= 200000;
+        hasIceMiner = true;
+        lastIceMinerPayout = Date.now();
+        document.getElementById('coin-balance').textContent = coinBalance;
+        document.getElementById('buyIceMinerBtn').disabled = true;
+        document.getElementById('iceMinerInfo').style.display = 'block';
+        showAlert('You have successfully purchased an IceMiner!');
+        saveUserData();
+        updateIceMinerCountdown();
+        calculateTotalEarningsPerHour();
+    } else {
+        showAlert('Not enough BERKS to purchase the IceMiner.');
+    }
+}
+
+// Function to buy a Task Manager
+function buyTaskManager() {
+    if (coinBalance >= 150000) {
+        coinBalance -= 150000;
+        hasTaskManager = true;
+        lastTaskManagerPayout = Date.now();
+        document.getElementById('coin-balance').textContent = coinBalance;
+        document.getElementById('buyTaskManagerBtn').disabled = true;
+        document.getElementById('taskManagerInfo').style.display = 'block';
+        showAlert('You have successfully purchased a Task Manager!');
+        saveUserData();
+        updateTaskManagerCountdown();
+        calculateTotalEarningsPerHour();
+    } else {
+        showAlert('Not enough BERKS to purchase the Task Manager.');
+    }
+}
+
+// Function to buy a BERK Vault
+function buyBerkVault() {
+    if (coinBalance >= 500000) {
+        coinBalance -= 500000;
+        hasBerkVault = true;
+        lastBerkVaultPayout = Date.now();
+        document.getElementById('coin-balance').textContent = coinBalance;
+        document.getElementById('buyBerkVaultBtn').disabled = true;
+        document.getElementById('berkVaultInfo').style.display = 'block';
+        showAlert('You have successfully purchased a BERK Vault!');
+        saveUserData();
+        updateBerkVaultCountdown();
+        calculateTotalEarningsPerHour();
+    } else {
+        showAlert('Not enough BERKS to purchase the BERK Vault.');
+    }
+}
+
+// Function to buy an IceBot
+function buyIceBot() {
+    if (coinBalance >= 250000) {
+        coinBalance -= 250000;
+        hasIceBot = true;
+        lastIceBotPayout = Date.now();
+        document.getElementById('coin-balance').textContent = coinBalance;
+        document.getElementById('buyIceBotBtn').disabled = true;
+        document.getElementById('iceBotInfo').style.display = 'block';
+        showAlert('You have successfully purchased an IceBot!');
+        saveUserData();
+        updateIceBotCountdown();
+        calculateTotalEarningsPerHour();
+    } else {
+        showAlert('Not enough BERKS to purchase the IceBot.');
+    }
+}
+
+// Function to buy a Frost Forge
+function buyFrostForge() {
+    if (coinBalance >= 2000000) {
+        coinBalance -= 2000000;
+        hasFrostForge = true;
+        lastFrostForgePayout = Date.now();
+        document.getElementById('coin-balance').textContent = coinBalance;
+        document.getElementById('buyFrostForgeBtn').disabled = true;
+        document.getElementById('frostForgeInfo').style.display = 'block';
+        showAlert('You have successfully purchased a Frost Forge!');
+        saveUserData();
+        updateFrostForgeCountdown();
+        calculateTotalEarningsPerHour();
+    } else {
+        showAlert('Not enough BERKS to purchase the Frost Forge.');
     }
 }
 
@@ -260,11 +383,11 @@ function updateAssistantCountdown() {
         document.getElementById('assistantCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 500;
+            coinBalance += 1500;
             lastAssistantPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your Assistant has generated 500 BERKS!');
+            showAlert('Your Assistant has generated 1500 BERKS!');
         }
 
         setTimeout(updateAssistantCountdown, 1000);
@@ -282,7 +405,7 @@ function updateIceFactoryCountdown() {
         document.getElementById('iceFactoryCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 8000; // Ice Factory generates 8000 BERKS
+            coinBalance += 8000;
             lastIceFactoryPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
@@ -291,6 +414,140 @@ function updateIceFactoryCountdown() {
 
         setTimeout(updateIceFactoryCountdown, 1000);
     }
+}
+// Function to update IceMiner countdown
+function updateIceMinerCountdown() {
+    if (hasIceMiner) {
+        const now = Date.now();
+        const timeSinceLastPayout = now - lastIceMinerPayout;
+        const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+        const minutes = Math.floor(timeUntilNextPayout / 60000);
+        const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+        document.getElementById('iceMinerCountdown').textContent = `${minutes}m ${seconds}s`;
+
+        if (timeUntilNextPayout === 0) {
+            coinBalance += 5000;
+            lastIceMinerPayout = now;
+            document.getElementById('coin-balance').textContent = coinBalance;
+            saveUserData();
+            showAlert('Your IceMiner has generated 5,000 BERKS!');
+        }
+
+        setTimeout(updateIceMinerCountdown, 1000);
+    }
+}
+
+// Function to update Task Manager countdown
+function updateTaskManagerCountdown() {
+    if (hasTaskManager) {
+        const now = Date.now();
+        const timeSinceLastPayout = now - lastTaskManagerPayout;
+        const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+        const minutes = Math.floor(timeUntilNextPayout / 60000);
+        const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+        document.getElementById('taskManagerCountdown').textContent = `${minutes}m ${seconds}s`;
+
+        if (timeUntilNextPayout === 0) {
+            coinBalance += 3000;
+            lastTaskManagerPayout = now;
+            document.getElementById('coin-balance').textContent = coinBalance;
+            saveUserData();
+            showAlert('Your Task Manager has generated 3,000 BERKS!');
+        }
+
+        setTimeout(updateTaskManagerCountdown, 1000);
+    }
+}
+
+// Function to update BERK Vault countdown
+function updateBerkVaultCountdown() {
+    if (hasBerkVault) {
+        const now = Date.now();
+        const timeSinceLastPayout = now - lastBerkVaultPayout;
+        const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+        const minutes = Math.floor(timeUntilNextPayout / 60000);
+        const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+        document.getElementById('berkVaultCountdown').textContent = `${minutes}m ${seconds}s`;
+
+        if (timeUntilNextPayout === 0) {
+            coinBalance += 10000;
+            lastBerkVaultPayout = now;
+            document.getElementById('coin-balance').textContent = coinBalance;
+            saveUserData();
+            showAlert('Your BERK Vault has generated 10,000 BERKS!');
+        }
+
+        setTimeout(updateBerkVaultCountdown, 1000);
+    }
+}
+
+// Function to update IceBot countdown
+function updateIceBotCountdown() {
+    if (hasIceBot) {
+        const now = Date.now();
+        const timeSinceLastPayout = now - lastIceBotPayout;
+        const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+        const minutes = Math.floor(timeUntilNextPayout / 60000);
+        const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+        document.getElementById('iceBotCountdown').textContent = `${minutes}m ${seconds}s`;
+
+        if (timeUntilNextPayout === 0) {
+            coinBalance += 6500;
+            lastIceBotPayout = now;
+            document.getElementById('coin-balance').textContent = coinBalance;
+            saveUserData();
+            showAlert('Your IceBot has generated 6,500 BERKS!');
+        }
+
+        setTimeout(updateIceBotCountdown, 1000);
+    }
+}
+
+// Function to update Frost Forge countdown
+function updateFrostForgeCountdown() {
+    if (hasFrostForge) {
+        const now = Date.now();
+        const timeSinceLastPayout = now - lastFrostForgePayout;
+        const timeUntilNextPayout = Math.max(0, 3600000 - timeSinceLastPayout);
+        const minutes = Math.floor(timeUntilNextPayout / 60000);
+        const seconds = Math.floor((timeUntilNextPayout % 60000) / 1000);
+        document.getElementById('frostForgeCountdown').textContent = `${minutes}m ${seconds}s`;
+
+        if (timeUntilNextPayout === 0) {
+            coinBalance += 50000;
+            lastFrostForgePayout = now;
+            document.getElementById('coin-balance').textContent = coinBalance;
+            saveUserData();
+            showAlert('Your Frost Forge has generated 50,000 BERKS!');
+        }
+
+        setTimeout(updateFrostForgeCountdown, 1000);
+    }
+}
+
+// Function to update all earnings countdowns
+function updateEarningsCountdowns() {
+    updateAssistantCountdown();
+    updateIceFactoryCountdown();
+    updateIceMinerCountdown();
+    updateTaskManagerCountdown();
+    updateBerkVaultCountdown();
+    updateIceBotCountdown();
+    updateFrostForgeCountdown();
+}
+
+// Function to calculate total earnings per hour
+function calculateTotalEarningsPerHour() {
+    let totalEarnings = 0;
+    if (hasAssistant) totalEarnings += 1500;
+    if (hasIceFactory) totalEarnings += 8000;
+    if (hasIceMiner) totalEarnings += 5000;
+    if (hasTaskManager) totalEarnings += 3000;
+    if (hasBerkVault) totalEarnings += 10000;
+    if (hasIceBot) totalEarnings += 6500;
+    if (hasFrostForge) totalEarnings += 50000;
+
+    document.getElementById('total-earnings-per-hour').textContent = totalEarnings;
 }
 
 // Function to save user data (encrypted) using cookies
@@ -309,8 +566,18 @@ function saveUserData() {
             lastPlayedTime,
             hasAssistant,
             lastAssistantPayout,
-            hasIceFactory, // Save Ice Factory data
-            lastIceFactoryPayout // Save last Ice Factory payout
+            hasIceFactory,
+            lastIceFactoryPayout,
+            hasIceMiner,
+            lastIceMinerPayout,
+            hasTaskManager,
+            lastTaskManagerPayout,
+            hasBerkVault,
+            lastBerkVaultPayout,
+            hasIceBot,
+            lastIceBotPayout,
+            hasFrostForge,
+            lastFrostForgePayout
         };
 
         const jsonData = JSON.stringify(data);
@@ -338,17 +605,8 @@ function loadUserData() {
 
             const decryptedData = JSON.parse(decryptedString);
             loadUserDataFromDecrypted(decryptedData);
-            
-            if (hasAssistant) {
-                document.getElementById('buyAssistantBtn').disabled = true;
-                document.getElementById('assistantInfo').style.display = 'block';
-                updateAssistantCountdown();
-            }
-            if (hasIceFactory) {
-                document.getElementById('buyIceFactoryBtn').disabled = true;
-                document.getElementById('iceFactoryInfo').style.display = 'block';
-                updateIceFactoryCountdown();
-            }
+            updateEarningsCountdowns();
+            calculateTotalEarningsPerHour();
         } catch (e) {
             console.error('Error loading user data:', e);
             showAlert('Error loading user data. Please sign in again or reset your data.');
@@ -368,7 +626,17 @@ function exportData() {
         hasAssistant,
         lastAssistantPayout,
         hasIceFactory,
-        lastIceFactoryPayout
+        lastIceFactoryPayout,
+        hasIceMiner,
+        lastIceMinerPayout,
+        hasTaskManager,
+        lastTaskManagerPayout,
+        hasBerkVault,
+        lastBerkVaultPayout,
+        hasIceBot,
+        lastIceBotPayout,
+        hasFrostForge,
+        lastFrostForgePayout
     };
     const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), userId).toString();
     const exportDiv = document.getElementById('exported-data');
@@ -390,16 +658,8 @@ function importData() {
         const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
         loadUserDataFromDecrypted(decryptedData);
         showAlert('Data imported successfully!');
-        if (hasAssistant) {
-            document.getElementById('buyAssistantBtn').disabled = true;
-            document.getElementById('assistantInfo').style.display = 'block';
-            updateAssistantCountdown();
-        }
-        if (hasIceFactory) {
-            document.getElementById('buyIceFactoryBtn').disabled = true;
-            document.getElementById('iceFactoryInfo').style.display = 'block';
-            updateIceFactoryCountdown();
-        }
+        updateEarningsCountdowns();
+        calculateTotalEarningsPerHour();
     } catch (e) {
         showAlert('Invalid data. Please enter valid exported data.');
     }
@@ -417,8 +677,18 @@ function logout() {
     lastPlayedTime = null;
     hasAssistant = false;
     lastAssistantPayout = null;
-    hasIceFactory = false; // Reset Ice Factory data
-    lastIceFactoryPayout = null; // Reset last Ice Factory payout
+    hasIceFactory = false;
+    lastIceFactoryPayout = null;
+    hasIceMiner = false;
+    lastIceMinerPayout = null;
+    hasTaskManager = false;
+    lastTaskManagerPayout = null;
+    hasBerkVault = false;
+    lastBerkVaultPayout = null;
+    hasIceBot = false;
+    lastIceBotPayout = null;
+    hasFrostForge = false;
+    lastFrostForgePayout = null;
     document.getElementById('sign-in-up').style.display = 'flex';
     document.getElementById('app-header').style.display = 'none';
     document.getElementById('tab-bar').style.display = 'none';
@@ -438,9 +708,41 @@ function copyUserId() {
     showAlert('User ID copied to clipboard!');
 }
 
+// Function to handle quiz answer selection
+function selectAnswer(option) {
+    const lastQuizDate = getCookie('lastQuizDate');
+    const today = new Date().toLocaleDateString();
 
+    if (lastQuizDate === today) {
+        showAlert('You have already played the quiz today. Please try again tomorrow.');
+        return;
+    }
+
+    setCookie('lastQuizDate', today, 1);
+
+    let correctAnswer = 'A';
+    if (option === correctAnswer) {
+        coinBalance += 100000;
+        document.getElementById('coin-balance').textContent = coinBalance;
+        showAlert('Correct! You have earned 100,000 BERKS.');
+    } else {
+        showAlert('Incorrect answer. Better luck next time!');
+    }
+
+    saveUserData();
+}
 
 // Load user data when the window loads
 window.onload = () => {
     loadUserData();
+    calculateTotalEarningsPerHour();
+
+    const lastQuizDate = getCookie('lastQuizDate');
+    const today = new Date().toLocaleDateString();
+    if (lastQuizDate === today) {
+        document.querySelectorAll('.quiz-options button').forEach(button => {
+            button.disabled = true;
+        });
+        showAlert('You have already played the quiz today. Please try again tomorrow.');
+    }
 };
