@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,30 +28,32 @@
     </div>
 
     <div class="section" id="account" style="display: none;">
-        <div class="user-info">
-            <div>Username: <span id="display-username"></span></div>
-            <div>User ID: <span id="display-userId"></span></div>
-            <button onclick="copyUserId()">Copy User ID</button>
-            <div>Balance: <span id="coin-balance">0</span> BERKS</div>
-            <div>Total Earnings per Hour: <span id="total-earnings-per-hour">0</span> BERKS</div>
-            <button class="logout-button" onclick="logout()">Log Out</button>
-        </div>
+       <div class="user-info">
+  <div>Username: <span id="display-username"></span></div>
+  <div>User ID: <span id="display-userId"></span></div>
+  <!-- New Status Element -->
+  <div id="user-status">Status: </div>
+  <button onclick="copyUserId()">Copy User ID</button>
+  <div>Balance: <span id="coin-balance">0</span> BERKS</div>
+  <div>Total Earnings per Hour: <span id="total-earnings-per-hour">0</span> BERKS</div>
+  <button class="logout-button" onclick="logout()">Log Out</button>
+</div>
         <div class="annoucement">
             <h3>‼️iMPORTANT ANNOUNCEMENT‼️</h3>
             <p>We have noticed that some users are cheating on tasks. As IceBerk grows, users will get chances to earn real money 💸. However, we will begin banning 🚫 users caught cheating during our occasional airdrops 💵. Stay fair, play right, and keep earning! ✨</p>
         </div>
         <div class="whats-new">
             <div class="annoucement">
-            <h3>What's New? <p>(Version 4.1)</p></h3>
+            <h3>What's New? <p>(Version 5)</p></h3>
             <ul>
-                <li>Sleek, Updated UI Layouts! 🏗️ </li>
-                <li>A Brand New Quiz Section to Earn More BERKS! 💵</li>
+                <li>A new section for sending and receiving of BERKS! 💱</li>
+                <li>Minor improvements and bug fixes. 🛠️</li>
             </ul>
             </div>
         </div>
         <div class="annoucement">
             <h3>Hint</h3>
-            <p>Win today's daily quiz to get 100,000 BERKS!</p>
+            <p>No hint for today...</p>
         </div>
     </div>
 
@@ -179,6 +182,32 @@
         <button onclick="importData()">Import Data</button>
     </div>
 
+    <div class="section transaction-section" id="transaction" style="display: none;">
+    <h2>Transactions</h2>
+    <div class="transaction-container">
+        <!-- Transfer Section -->
+        <div class="transfer-section">
+            <h3>Transfer BERKS</h3>
+            <input type="text" id="recipient-name" placeholder="Recipient Name">
+            <input type="text" id="recipient-id" placeholder="Recipient User ID">
+            <input type="number" id="transfer-amount" placeholder="Amount to Transfer">
+            <input type="password" id="user-encrypted-data" placeholder="Your Encrypted Data">
+            <button onclick="transferBerks()">Transfer</button>
+        </div>
+        <!-- Receive Section -->
+        <div class="receive-section">
+            <h3>Receive BERKS</h3>
+            <input type="text" id="receive-code" placeholder="Enter Received Code">
+            <button onclick="receiveBerks()">Receive</button>
+        </div>
+        <!-- Transaction Code Display -->
+        <div id="transaction-code-container" style="display: none;">
+            <textarea id="transaction-code" readonly></textarea>
+            <button onclick="copyTransactionCode()">Copy Code</button>
+        </div>
+    </div>
+</div>
+
     <div class="disclaimer">The IceBerk game is still in development... thank you for using the early access, more tasks coming soon...
         Disclaimer: T€N0C0 has nothing to do with the contents in the promo campaign (Tasks).</div>
     <div class="footer">© 2024 IceBerk. All rights reserved.</div>
@@ -187,6 +216,7 @@
         <button onclick="showSection('account')">Account</button>
         <button onclick="showSection('earn')">Earn</button>
         <button onclick="showSection('shop')">Shop</button>
+        <button onclick="showSection('transaction')">Transaction</button>
         <button onclick="showSection('export')">Export</button>
     </div>
 

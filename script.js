@@ -24,6 +24,16 @@ let hasIceBot = false;
 let lastIceBotPayout = null;
 let hasFrostForge = false;
 let lastFrostForgePayout = null;
+let transactionHistory = [];
+let receivedCodes = []
+let storedBalance = 0;
+let usersList = [
+    { userId: 'rNXMbW3E8UiOsrt', username: 'Enoch', status: 'safe', balanceChange: '+100', expiryTime: 15 }, // Add 100 BERKS with a 60-second expiry
+    { userId: 'N82H9GmK32khTwY', username: 'Juwon', status: 'safe', balanceChange: '-50', expiryTime: 120 },  // Subtract 50 BERKS with a 120-second expiry
+    { userId: 'user3', username: 'Charlie', status: 'frozen', balanceChange: '200', expiryTime: 30 } // Set to 200 BERKS with a 30-second expiry
+    // Add more users as needed
+];
+
 
 // Function to generate a random user ID
 function generateUserId() {
@@ -37,12 +47,48 @@ function generateUserId() {
 
 // Function to show alerts
 function showAlert(message) {
-    const alert = document.getElementById('alert');
-    alert.textContent = message;
-    alert.classList.add('show');
+    // Create a new alert container
+    const alertContainer = document.createElement('div');
+    alertContainer.className = 'alert';
+
+    // Create the message element
+    const messageElement = document.createElement('span');
+    messageElement.textContent = message;
+
+    // Create the OK button
+    const okButton = document.createElement('button');
+    okButton.textContent = 'OK';
+    okButton.className = 'alert-button';
+    
+    // Add event listener to remove alert on button click
+    okButton.addEventListener('click', () => {
+        alertContainer.classList.remove('show');
+        setTimeout(() => {
+            alertContainer.remove(); // Remove from DOM after fading out
+        }, 300); // Wait for fade-out transition
+    });
+
+    // Append message and button to the alert container
+    alertContainer.appendChild(messageElement);
+    alertContainer.appendChild(okButton);
+    
+    // Append the alert container to the body
+    document.body.appendChild(alertContainer);
+
+    // Trigger the show animation
     setTimeout(() => {
-        alert.classList.remove('show');
-    }, 15000); // Alert lasts for 15 seconds
+        alertContainer.classList.add('show');
+        
+        // Automatically hide after 15 seconds if not dismissed
+        setTimeout(() => {
+            if (alertContainer) { // Check if it still exists
+                alertContainer.classList.remove('show');
+                setTimeout(() => {
+                    alertContainer.remove(); // Remove from DOM after fading out
+                }, 300); // Wait for fade-out transition
+            }
+        }, 15000); // Alert lasts for 15 seconds
+    }, 10); // Small delay to allow rendering
 }
 
 // Function to set a cookie
@@ -112,39 +158,73 @@ function signIn() {
     }
 }
 
-// Function to load user data from decrypted object
 function loadUserDataFromDecrypted(decryptedData) {
-    userId = decryptedData.userId;
-    username = decryptedData.username;
-    coinBalance = decryptedData.coinBalance;
-    tasks = decryptedData.tasks;
-    inviteStartTime = decryptedData.inviteStartTime;
-    lastPlayedTime = decryptedData.lastPlayedTime;
-    hasAssistant = decryptedData.hasAssistant;
-    lastAssistantPayout = decryptedData.lastAssistantPayout;
-    hasIceFactory = decryptedData.hasIceFactory;
-    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout;
-    hasIceMiner = decryptedData.hasIceMiner;
-    lastIceMinerPayout = decryptedData.lastIceMinerPayout;
-    hasTaskManager = decryptedData.hasTaskManager;
-    lastTaskManagerPayout = decryptedData.lastTaskManagerPayout;
-    hasBerkVault = decryptedData.hasBerkVault;
-    lastBerkVaultPayout = decryptedData.lastBerkVaultPayout;
-    hasIceBot = decryptedData.hasIceBot;
-    lastIceBotPayout = decryptedData.lastIceBotPayout;
-    hasFrostForge = decryptedData.hasFrostForge;
-    lastFrostForgePayout = decryptedData.lastFrostForgePayout;
+    // Ensure decryptedData is an object
+    if (!decryptedData || typeof decryptedData !== 'object') {
+        console.error('Invalid decrypted data.');
+        return;
+    }
 
-    document.getElementById('display-username').textContent = username;
-    document.getElementById('display-userId').textContent = userId;
-    document.getElementById('coin-balance').textContent = coinBalance;
-    document.getElementById('sign-in-up').style.display = 'none';
-    document.getElementById('app-header').style.display = 'block';
-    document.getElementById('tab-bar').style.display = 'flex';
-    showSection('account');
-    saveUserData();
+    // Set default values for all variables
+    userId = decryptedData.userId || ''; // Default to empty string if undefined
+    username = decryptedData.username || 'Guest'; // Default to 'Guest' if undefined
+    coinBalance = decryptedData.coinBalance || 0; // Default to 0 if undefined
+    tasks = decryptedData.tasks || {}; // Default to empty object if undefined
+    inviteStartTime = decryptedData.inviteStartTime || null; // Default to null if undefined
+    lastPlayedTime = decryptedData.lastPlayedTime || null; // Default to null if undefined
+    hasAssistant = decryptedData.hasAssistant !== undefined ? decryptedData.hasAssistant : false; // Default to false
+    lastAssistantPayout = decryptedData.lastAssistantPayout || null; // Default to null if undefined
+    hasIceFactory = decryptedData.hasIceFactory !== undefined ? decryptedData.hasIceFactory : false; // Default to false
+    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout || null; // Default to null if undefined
+    hasIceMiner = decryptedData.hasIceMiner !== undefined ? decryptedData.hasIceMiner : false; // Default to false
+    lastIceMinerPayout = decryptedData.lastIceMinerPayout || null; // Default to null if undefined
+    hasTaskManager = decryptedData.hasTaskManager !== undefined ? decryptedData.hasTaskManager : false; // Default to false
+    lastTaskManagerPayout = decryptedData.lastTaskManagerPayout || null; // Default to null if undefined
+    hasBerkVault = decryptedData.hasBerkVault !== undefined ? decryptedData.hasBerkVault : false; // Default to false
+    lastBerkVaultPayout = decryptedData.lastBerkVaultPayout || null; // Default to null if undefined
+    hasIceBot = decryptedData.hasIceBot !== undefined ? decryptedData.hasIceBot : false; // Default to false
+    lastIceBotPayout = decryptedData.lastIceBotPayout || null; // Default to null if undefined
+    hasFrostForge = decryptedData.hasFrostForge !== undefined ? decryptedData.hasFrostForge : false; // Default to false
+    lastFrostForgePayout = decryptedData.lastFrostForgePayout || null; // Default to null if undefined
+
+    receivedCodes = decryptedData.receivedCodes || []; // Default to empty array if undefined
+    transactionHistory = decryptedData.transactionHistory || []; // Default to empty array if undefined
+
+   storedBalance = (decryptedData.storedBalance !== undefined) ? decryptedData.storedBalance : coinBalance;
+
+   // Initialize or retrieve update status and timestamps with defaults
+   if (decryptedData.balanceUpdated === undefined) {
+       decryptedData.balanceUpdated = false; // Default value
+   }
+   if (decryptedData.lastUpdateTimestamp === undefined) {
+       decryptedData.lastUpdateTimestamp = Date.now(); // Default to current time
+   }
+   if (decryptedData.expiryTimestamp === undefined) {
+       decryptedData.expiryTimestamp = 0; // Default value for expiry timestamp
+   }
+
+   const currentTime = Date.now();
+   if (currentTime > decryptedData.expiryTimestamp) {
+       // If expired, reset balance update status
+       decryptedData.balanceUpdated = false; 
+   }
+
+   updateStoredBalance(decryptedData); 
+
+   document.getElementById('display-username').textContent = username;
+   document.getElementById('coin-balance').textContent = coinBalance;
+
+   const statusElement = document.createElement('div');
+   statusElement.id = 'user-status';
+   document.querySelector('.user-info').appendChild(statusElement);
+
+   document.getElementById('sign-in-up').style.display = 'none';
+   document.getElementById('app-header').style.display = 'block';
+   document.getElementById('tab-bar').style.display = 'flex';
+   showSection('account');
+
+   checkUserStatus(); 
 }
-
 // Function to show a specific section
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.section');
@@ -551,16 +631,16 @@ function calculateTotalEarningsPerHour() {
 }
 
 // Function to save user data (encrypted) using cookies
-function saveUserData() {
+function saveUserData(storedBalanceValue, data = {}) {
     try {
         if (!userId) {
             throw new Error('User ID is not set. Cannot save data.');
         }
 
-        const data = {
+        const userInfo = {
             userId,
             username,
-            coinBalance,
+            coinBalance, 
             tasks,
             inviteStartTime,
             lastPlayedTime,
@@ -577,13 +657,20 @@ function saveUserData() {
             hasIceBot,
             lastIceBotPayout,
             hasFrostForge,
-            lastFrostForgePayout
+            lastFrostForgePayout,
+            receivedCodes, 
+            transactionHistory, 
+            
+            storedBalance: storedBalanceValue,
+            balanceUpdated: data.balanceUpdated || false, 
+            lastUpdateTimestamp: data.lastUpdateTimestamp || Date.now(),
+            expiryTimestamp: data.expiryTimestamp || 0
         };
 
-        const jsonData = JSON.stringify(data);
+        const jsonData = JSON.stringify(userInfo);
         const encryptedData = CryptoJS.AES.encrypt(jsonData, userId).toString();
-        setCookie('userData', encryptedData, 7); // Save for 7 days
-        setCookie('userId', userId, 7); // Save userId separately for 7 days
+        setCookie('userData', encryptedData, 7); 
+        setCookie('userId', userId, 7); 
     } catch (e) {
         console.error('Error saving user data:', e);
         showAlert('Error saving user data. Please try again.');
@@ -722,9 +809,9 @@ function selectAnswer(option) {
 
     let correctAnswer = 'A';
     if (option === correctAnswer) {
-        coinBalance += 100000;
+        coinBalance += 10000;
         document.getElementById('coin-balance').textContent = coinBalance;
-        showAlert('Correct! You have earned 100,000 BERKS.');
+        showAlert('Correct! You have earned 10,000 BERKS.');
     } else {
         showAlert('Incorrect answer. Better luck next time!');
     }
@@ -732,6 +819,227 @@ function selectAnswer(option) {
     saveUserData();
 }
 
+function transferBerks() {
+    const recipientName = document.getElementById('recipient-name').value;
+    const recipientId = document.getElementById('recipient-id').value;
+    const transferAmount = parseInt(document.getElementById('transfer-amount').value, 10);
+    const userEncryptedData = document.getElementById('user-encrypted-data').value;
+
+    // Validate input fields
+    if (!recipientName || !recipientId || isNaN(transferAmount) || !userEncryptedData) {
+        showAlert('Please fill in all fields.');
+        return;
+    }
+
+    if (recipientId === userId) {
+        showAlert('You cannot transfer BERKS to yourself.');
+        return;
+    }
+
+    if (transferAmount < 1) {
+        showAlert('Transfer amount must be at least 1 BERK.');
+        return;
+    }
+
+    if (transferAmount + 50 > coinBalance) {
+        showAlert('Insufficient balance to complete the transaction.');
+        return;
+    }
+
+   // Check transaction limit
+   const oneHourAgo = Date.now() - (60 * 60 * 1000);
+   const recentTransactions = transactionHistory.filter(transaction => transaction.timestamp > oneHourAgo);
+   
+   if (recentTransactions.length >= 50) {
+       showAlert('Transaction limit reached. You can only make 5 transfers per hour.');
+       return;
+   }
+
+   try {
+       const decryptedBytes = CryptoJS.AES.decrypt(userEncryptedData, userId);
+       const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+
+       if (decryptedData.userId !== userId) {
+           showAlert('Invalid encrypted data.');
+           return;
+       }
+
+       // Create a transaction code
+       const transactionCode = CryptoJS.AES.encrypt(
+           JSON.stringify({ recipientId, amount: transferAmount, senderName: username }),
+           recipientId
+       ).toString();
+
+       // Update coin balance
+       coinBalance -= (transferAmount + 50);
+       document.getElementById('coin-balance').textContent = coinBalance;
+
+       // Record the transaction with timestamp
+       transactionHistory.push({ timestamp: Date.now(), recipientId, amount: transferAmount });
+
+       // Display the transaction code in a box
+       document.getElementById('transaction-code').value = transactionCode;
+       document.getElementById('transaction-code-container').style.display = 'block';
+
+       // Show success alert
+       showAlert(`Transfer successful! You sent ${transferAmount} BERKS to ${recipientName}.`);
+
+       // Save user data after successful transfer
+       saveUserData();
+       
+   } catch (e) {
+       showAlert('Invalid encrypted data. Please try again.');
+   }
+}
+
+function copyTransactionCode() {
+    const transactionCodeTextArea = document.getElementById('transaction-code');
+    transactionCodeTextArea.select();
+    document.execCommand('copy');
+    
+    showAlert('Transaction code copied to clipboard!');
+}
+
+function receiveBerks() {
+    const receiveCode = document.getElementById('receive-code').value;
+
+    if (!receiveCode) {
+        showAlert('Please enter a valid transaction code.');
+        return;
+    }
+
+    // Check if the code has already been used
+    if (receivedCodes.includes(receiveCode)) {
+        showAlert('This transaction code has already been used.');
+        return;
+    }
+
+    try {
+        const decryptedBytes = CryptoJS.AES.decrypt(receiveCode, userId);
+        const transactionData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+
+        if (transactionData.recipientId !== userId) {
+            showAlert('Transaction code does not match your User ID.');
+            return;
+        }
+
+        coinBalance += transactionData.amount;
+        document.getElementById('coin-balance').textContent = coinBalance;
+
+        // Add the code to the history
+        receivedCodes.push(receiveCode);
+        saveUserData();
+
+        showAlert(`You have received ${transactionData.amount} BERKS from ${transactionData.senderName}.`);
+        
+    } catch (e) {
+        showAlert('Invalid transaction code. Please try again.');
+    }
+}
+
+function checkUserStatus() {
+    const currentUser = usersList.find(user => user.userId === userId);
+
+    if (!currentUser) {
+        showAlert('User not found.');
+        return;
+    }
+
+    const statusElement = document.getElementById('user-status');
+    statusElement.textContent = `Status: ${currentUser.status}`;
+
+    switch (currentUser.status) {
+        case 'safe':
+            // Allow normal usage
+            updateEarningsCountdowns(); // Start earnings calculations
+            enableQuiz(); // Enable quiz interactions
+            break;
+        case 'banned':
+            // Redirect to ban.html
+            window.location.href = 'ban.html';
+            break;
+        case 'frozen':
+            // Disable earning, receiving, transferring BERKS, and quiz
+            disableTransactions();
+            stopEarnings(); // Stop earnings calculations
+            disableQuiz(); // Disable quiz interactions
+            break;
+        default:
+            showAlert('Unknown status.');
+    }
+}
+
+function stopEarnings() {
+    clearTimeout(updateAssistantCountdown);
+    clearTimeout(updateIceFactoryCountdown);
+    clearTimeout(updateIceMinerCountdown);
+    clearTimeout(updateTaskManagerCountdown);
+    clearTimeout(updateBerkVaultCountdown);
+    clearTimeout(updateIceBotCountdown);
+    clearTimeout(updateFrostForgeCountdown);
+}
+
+function disableQuiz() {
+    document.querySelectorAll('.quiz-options button').forEach(button => {
+        button.disabled = true;
+    });
+}
+
+function enableQuiz() {
+    document.querySelectorAll('.quiz-options button').forEach(button => {
+        button.disabled = false;
+    });
+}
+
+function updateStoredBalance(decryptedData) {
+    const currentUser = usersList.find(user => user.userId === userId);
+    
+    if (currentUser) {
+        const changeString = currentUser.balanceChange;
+        const expiryTime = parseInt(currentUser.expiryTime, 10); 
+
+        const currentTime = Date.now();
+        const elapsedTime = (currentTime - decryptedData.lastUpdateTimestamp) / 1000;
+
+        if (decryptedData.balanceUpdated && elapsedTime < expiryTime) {
+            showAlert('Balance update is still valid; no changes will be made.');
+            return;
+        }
+
+        let newBalance;
+        if (changeString.startsWith('+')) {
+            const amountToAdd = parseFloat(changeString.slice(1));
+            newBalance = storedBalance + amountToAdd;
+        } else if (changeString.startsWith('-')) {
+            const amountToSubtract = parseFloat(changeString.slice(1));
+            newBalance = storedBalance - amountToSubtract;
+        } else {
+            newBalance = parseFloat(changeString);
+        }
+
+        if (newBalance >= 0) {
+            setTimeout(() => {
+                storedBalance = newBalance;
+                coinBalance = newBalance;
+                document.getElementById('coin-balance').textContent = coinBalance;
+
+                decryptedData.balanceUpdated = true;
+                decryptedData.lastUpdateTimestamp = Date.now();
+                saveUserData(storedBalance, { 
+                    balanceUpdated: true, 
+                    lastUpdateTimestamp: Date.now(), 
+                    expiryTimestamp: Date.now() + (expiryTime * 1000) 
+                });
+
+                showAlert('User balance updated successfully.');
+            }, (expiryTime - elapsedTime) * 1000);
+        } else {
+            showAlert('Insufficient balance for this operation.');
+        }
+    } else {
+        showAlert('User not found in users list.');
+    }
+}
 // Load user data when the window loads
 window.onload = () => {
     loadUserData();
