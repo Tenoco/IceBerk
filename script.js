@@ -28,7 +28,7 @@ let transactionHistory = [];
 let receivedCodes = []
 let storedBalance = 0;
 let usersList = [
-    { userId: 'PdGdx3WV8vph1Tz', username: 'Enoch', status: 'banned', balanceChange: '+100', expiryTime: 15 }, // Add 100 BERKS with a 60-second expiry
+    { userId: 'PdGdx3WV8vph1Tz', username: 'Enoch', status: 'frozen', balanceChange: '+100', expiryTime: 15 }, // Add 100 BERKS with a 60-second expiry
     { userId: 'N82H9GmK32khTwY', username: 'Juwon', status: 'safe', balanceChange: '-50', expiryTime: 120 },  // Subtract 50 BERKS with a 120-second expiry
     { userId: 'user3', username: 'Charlie', status: 'frozen', balanceChange: '200', expiryTime: 30 } // Set to 200 BERKS with a 30-second expiry
     // Add more users as needed
