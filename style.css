@@ -473,3 +473,53 @@ a:hover {
 a:active {
     color: #00e5e5; /* Active link color (darker cyan) */
 }
+
+.card.dark-theme {
+    background: linear-gradient(135deg, #1a1a1a, #101010);
+    color: #00ffaa;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #00ffaa;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 900;
+}
+
+.card.dark-theme .card-content {
+    padding: 10px;
+}
+
+.card.dark-theme h3 {
+    color: #00ffaa;
+    text-shadow: 0 0 10px rgba(0, 255, 170, 0.7);
+}
+
+.card.dark-theme button {
+    background-color: #1c1c1c;
+    color: #00ffaa;
+    border: 1px solid #00ffaa;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-shadow: 0 0 5px rgba(0, 255, 170, 0.7);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 900;
+}
+
+.card.dark-theme button:hover {
+    background-color: #00ffaa;
+    color: #1a1a1a;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+}
+
+.card.dark-theme .announcement {
+    background-color: #1c1c1c;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 15px;
+    border: 1px solid #00ffaa;
+    box-shadow: inset 0 0 10px rgba(0, 255, 170, 0.3);
+}
