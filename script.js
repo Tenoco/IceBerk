@@ -1,5 +1,5 @@
 // Global variables
-let coinBalance = 2500;
+let coinBalance = 0;
 let userId = '';
 let username = '';
 let tasks = {
@@ -281,12 +281,12 @@ function inviteFriends() {
     if (!tasks.invite) {
         inviteStartTime = Date.now();
         tasks.invite = true;
-        showAlert('Share the @iceberobot link with your friends. You will be rewarded after 2 hours.');
+        showAlert('Share the @iceberobot link with your friends. You will be rewarded after they clicked the link in some moments.');
         saveUserData();
     } else {
         const elapsed = (Date.now() - inviteStartTime) / (1000 * 60 * 60);
         if (elapsed >= 2) {
-            coinBalance += 10000;
+            coinBalance += 2;
             document.getElementById('coin-balance').textContent = coinBalance;
             showAlert('You have been rewarded 10,000 BERKS for inviting friends!');
             tasks.invite = false;
@@ -308,7 +308,7 @@ function playMiniGames() {
         let totalCoinsEarned = 0;
 
         const rewardInterval = setInterval(() => {
-            playDuration += 60000;
+            playDuration += 0.60;
             const coinsEarned = Math.min(playDuration / 60000 * 1000, 60000);
             coinBalance += coinsEarned;
             totalCoinsEarned += coinsEarned;
@@ -809,9 +809,9 @@ function selectAnswer(option) {
 
     let correctAnswer = 'B';
     if (option === correctAnswer) {
-        coinBalance += 100;
+        coinBalance += 5;
         document.getElementById('coin-balance').textContent = coinBalance;
-        showAlert('Correct! You have earned 100 BERKS.');
+        showAlert('Correct! You have earned 5 BERKS.');
     } else {
         showAlert('Incorrect answer. Better luck next time!');
     }
@@ -1041,6 +1041,18 @@ function updateStoredBalance(decryptedData) {
         showAlert('User not found in users list.');
     }
 }
+
+function showTab(tabName) {
+    document.getElementById('transfer-section').style.display = tabName === 'transfer' ? 'flex' : 'none';
+    document.getElementById('receive-section').style.display = tabName === 'receive' ? 'flex' : 'none';
+    
+    // Update active tab button
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
+
 // Load user data when the window loads
 window.onload = () => {
     loadUserData();
