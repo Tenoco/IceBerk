@@ -78,95 +78,6 @@ body {
     font-size: 0.9rem; /* Smaller font size for text */
 }
 
-/* Task Container */
-.tasks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-/* Task Container */
-.tasks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-/* Task Container */
-.tasks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted min-width for smaller cards */
-    gap: 15px; /* Reduced gap for a tighter layout */
-    padding: 15px; /* Reduced padding */
-    max-width: 1000px; /* Adjusted max-width for a more compact layout */
-    margin: auto;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-/* Task Items (Cards) */
-.task-item {
-    background-color: #1c1c1c; /* Dark background */
-    border-radius: 10px; /* Slightly smaller border radius */
-    padding: 15px; /* Reduced padding for a smaller card */
-    color: #e0e0e0; /* Text color */
-    border: 2px solid rgba(0, 255, 170, 0.8); /* Neon green border */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s; /* Smoother transitions */
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 255, 170, 0.3); /* Neon glow shadow */
-    position: relative;
-    overflow: hidden;
-}
-
-.task-item:hover {
-    background-color: #00FFAA; /* Hover background color */
-    color: #1a1a1a; /* Hover text color */
-    transform: translateY(-3px); /* Subtle lift effect on hover */
-    box-shadow: 0 8px 20px rgba(0, 255, 170, 0.5); /* Enhanced glow on hover */
-}
-
-.task-item:before {
-    content: '';
-    position: absolute;
-    top: -5px; /* Slightly offset to create a glowing effect */
-    left: -5px;
-    width: calc(100% + 10px); /* Extend beyond card edges for glow effect */
-    height: calc(100% + 10px);
-    background: rgba(0, 255, 170, 0.5); /* Neon green background for glow effect */
-    filter: blur(15px); /* Blur for a softer glow */
-    z-index: -1;
-    transition: opacity 0.3s ease;
-    opacity: 0; /* Hidden by default */
-}
-
-.task-item:hover:before {
-    opacity: 1; /* Show glow on hover */
-}
-
-.task-item a {
-    color: inherit; /* Inherit text color from parent */
-    text-decoration: none; /* Remove underline from links */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
 
 /* Button Styles */
 /* Mobile-Optimized Button Styles */
@@ -295,7 +206,7 @@ button.danger:hover, button.danger:focus {
         font-size: 14px;
     }
 }
-</style>
+
 
 /* Tab Bar */
 .tab-bar {
@@ -460,49 +371,7 @@ button.danger:hover, button.danger:focus {
     text-align: center;
 }
 
-/* Shop Items */
-.shop-item {
-    background-color: #1c1c1c; /* Dark background for contrast */
-    border-radius: 10px; /* Slightly larger border radius for a softer look */
-    margin: 10px 0; /* Consistent vertical spacing */
-    padding: 15px;
-    color: #00ffaa; /* Neon text color */
-    border: 2px solid rgba(0, 255, 170, 0.8); /* Neon green border */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
-    box-shadow: 0 4px 10px rgba(0, 255, 170, 0.2); /* Subtle neon glow shadow */
-}
 
-.shop-item:hover {
-    background-color: #2a2a2c; /* Slightly lighter background on hover */
-    box-shadow: 0 8px 20px rgba(0, 255, 170, 0.4); /* Enhanced glow on hover */
-}
-
-/* Button Styles within Shop Items */
-.shop-item button {
-    background-color: transparent;
-    color: #00ffaa;
-    border: 2px solid rgba(0, 255, 170, 0.8); /* Neon green border for buttons */
-    padding: 6px 12px; /* Adjusted padding for a balanced look */
-    border-radius: 5px; /* Consistent with overall design */
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s; /* Added color transition */
-}
-
-.shop-item button:hover {
-    background-color: #00ffaa; /* Neon green background on hover */
-    color: #1c1c1c; /* Dark text color on hover for contrast */
-}
-
-/* Disabled Button Styles */
-.shop-item button:disabled {
-    background-color: transparent;
-    border-color: #555; /* Muted border color for disabled state */
-    color: #555; /* Muted text color for disabled state */
-    cursor: not-allowed;
-}
 
 .disclaimer {
     background-color: #1c1c1c;
@@ -528,26 +397,7 @@ button.danger:hover, button.danger:focus {
 }
 
 /* Transaction Section */
-.transaction-section {
-    background-color: #1c1c1c; /* Dark background */
-    padding: 15px; /* Reduced padding for a more compact look */
-    border-radius: 10px; /* Slightly smaller border radius */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Softer shadow */
-    margin: 15px; /* Reduced margin */
-    color: #00ffaa; /* Text color */
-}
 
-/* Transaction Container */
-.transaction-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.transaction-container h3 {
-    margin-bottom: 10px; /* Reduced margin for headings */
-    font-weight: bold; /* Bold headings for emphasis */
-}
 
 /* Input Fields */
 .transaction-container input,
@@ -563,29 +413,6 @@ button.danger:hover, button.danger:focus {
     color: #e0e0e0; /* Text color */
 }
 
-/* Button Styles */
-.transaction-container button {
-    background-color: transparent;
-    color: #00ffaa;
-    border: 2px solid rgba(0, 255, 170, 0.8); /* Neon green border similar to other buttons */
-    padding: 10px 18px; /* Adjusted padding for consistency */
-    border-radius: 8px; /* Consistent border radius with inputs */
-    cursor: pointer;
-    font-size: 0.9rem; /* Slightly smaller font size for a cleaner look */
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.transaction-container button:hover {
-    background-color: #00ffaa; /* Neon green background on hover */
-    color: #1c1c1c; /* Dark text color on hover */
-    transform: scale(1.05); /* Subtle scale effect on hover */
-}
-
-/* Transaction Code Container */
-#transaction-code-container {
-    margin-top: 15px; /* Reduced top margin */
-    text-align: center;
-}
 
 /* Link Styles */
 a:link {

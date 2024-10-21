@@ -159,71 +159,70 @@ function signIn() {
 }
 
 function loadUserDataFromDecrypted(decryptedData) {
-    // Ensure decryptedData is an object
+    console.log('Loading user data from decrypted object...');
+
     if (!decryptedData || typeof decryptedData !== 'object') {
-        console.error('Invalid decrypted data.');
+        console.error('Invalid decrypted data:', decryptedData);
+        showAlert('Error loading user data. Please sign in again.');
+        resetUserDataAndShowSignIn();
         return;
     }
 
-    // Set default values for all variables
-    userId = decryptedData.userId || ''; // Default to empty string if undefined
-    username = decryptedData.username || 'Guest'; // Default to 'Guest' if undefined
-    coinBalance = decryptedData.coinBalance || 0; // Default to 0 if undefined
-    tasks = decryptedData.tasks || {}; // Default to empty object if undefined
-    inviteStartTime = decryptedData.inviteStartTime || null; // Default to null if undefined
-    lastPlayedTime = decryptedData.lastPlayedTime || null; // Default to null if undefined
-    hasAssistant = decryptedData.hasAssistant !== undefined ? decryptedData.hasAssistant : false; // Default to false
-    lastAssistantPayout = decryptedData.lastAssistantPayout || null; // Default to null if undefined
-    hasIceFactory = decryptedData.hasIceFactory !== undefined ? decryptedData.hasIceFactory : false; // Default to false
-    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout || null; // Default to null if undefined
-    hasIceMiner = decryptedData.hasIceMiner !== undefined ? decryptedData.hasIceMiner : false; // Default to false
-    lastIceMinerPayout = decryptedData.lastIceMinerPayout || null; // Default to null if undefined
-    hasTaskManager = decryptedData.hasTaskManager !== undefined ? decryptedData.hasTaskManager : false; // Default to false
-    lastTaskManagerPayout = decryptedData.lastTaskManagerPayout || null; // Default to null if undefined
-    hasBerkVault = decryptedData.hasBerkVault !== undefined ? decryptedData.hasBerkVault : false; // Default to false
-    lastBerkVaultPayout = decryptedData.lastBerkVaultPayout || null; // Default to null if undefined
-    hasIceBot = decryptedData.hasIceBot !== undefined ? decryptedData.hasIceBot : false; // Default to false
-    lastIceBotPayout = decryptedData.lastIceBotPayout || null; // Default to null if undefined
-    hasFrostForge = decryptedData.hasFrostForge !== undefined ? decryptedData.hasFrostForge : false; // Default to false
-    lastFrostForgePayout = decryptedData.lastFrostForgePayout || null; // Default to null if undefined
+    // Set user data with default values
+    userId = decryptedData.userId ?? '';
+    username = decryptedData.username ?? 'Guest';
+    coinBalance = decryptedData.coinBalance ?? 0;
+    tasks = decryptedData.tasks ?? {};
+    inviteStartTime = decryptedData.inviteStartTime ?? null;
+    lastPlayedTime = decryptedData.lastPlayedTime ?? null;
+    hasAssistant = decryptedData.hasAssistant ?? false;
+    lastAssistantPayout = decryptedData.lastAssistantPayout ?? null;
+    hasIceFactory = decryptedData.hasIceFactory ?? false;
+    lastIceFactoryPayout = decryptedData.lastIceFactoryPayout ?? null;
+    hasIceMiner = decryptedData.hasIceMiner ?? false;
+    lastIceMinerPayout = decryptedData.lastIceMinerPayout ?? null;
+    hasTaskManager = decryptedData.hasTaskManager ?? false;
+    lastTaskManagerPayout = decryptedData.lastTaskManagerPayout ?? null;
+    hasBerkVault = decryptedData.hasBerkVault ?? false;
+    lastBerkVaultPayout = decryptedData.lastBerkVaultPayout ?? null;
+    hasIceBot = decryptedData.hasIceBot ?? false;
+    lastIceBotPayout = decryptedData.lastIceBotPayout ?? null;
+    hasFrostForge = decryptedData.hasFrostForge ?? false;
+    lastFrostForgePayout = decryptedData.lastFrostForgePayout ?? null;
 
-    receivedCodes = decryptedData.receivedCodes || []; // Default to empty array if undefined
-    transactionHistory = decryptedData.transactionHistory || []; // Default to empty array if undefined
+    receivedCodes = decryptedData.receivedCodes ?? [];
+    transactionHistory = decryptedData.transactionHistory ?? [];
 
-   storedBalance = (decryptedData.storedBalance !== undefined) ? decryptedData.storedBalance : coinBalance;
+    storedBalance = decryptedData.storedBalance ?? coinBalance;
 
-   // Initialize or retrieve update status and timestamps with defaults
-   if (decryptedData.balanceUpdated === undefined) {
-       decryptedData.balanceUpdated = false; // Default value
-   }
-   if (decryptedData.lastUpdateTimestamp === undefined) {
-       decryptedData.lastUpdateTimestamp = Date.now(); // Default to current time
-   }
-   if (decryptedData.expiryTimestamp === undefined) {
-       decryptedData.expiryTimestamp = 0; // Default value for expiry timestamp
-   }
+    // Update UI elements
+    updateUIElement('display-username', username);
+    updateUIElement('coin-balance', coinBalance);
+    updateUIElement('display-userId', userId);
 
-   const currentTime = Date.now();
-   if (currentTime > decryptedData.expiryTimestamp) {
-       // If expired, reset balance update status
-       decryptedData.balanceUpdated = false; 
-   }
+    document.getElementById('sign-in-up')?.style.setProperty('display', 'none');
+    document.getElementById('app-header')?.style.setProperty('display', 'block');
+    document.getElementById('tab-bar')?.style.setProperty('display', 'flex');
 
-   updateStoredBalance(decryptedData); 
+    // Create and append user status element if it doesn't exist
+    if (!document.getElementById('user-status')) {
+        const statusElement = document.createElement('div');
+        statusElement.id = 'user-status';
+        document.querySelector('.user-info')?.appendChild(statusElement);
+    }
 
-   document.getElementById('display-username').textContent = username;
-   document.getElementById('coin-balance').textContent = coinBalance;
+    showSection('account');
+    checkUserStatus();
+    console.log('User data loaded successfully.');
+}
 
-   const statusElement = document.createElement('div');
-   statusElement.id = 'user-status';
-   document.querySelector('.user-info').appendChild(statusElement);
-
-   document.getElementById('sign-in-up').style.display = 'none';
-   document.getElementById('app-header').style.display = 'block';
-   document.getElementById('tab-bar').style.display = 'flex';
-   showSection('account');
-
-   checkUserStatus(); 
+function updateUIElement(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = value;
+    } else {
+        console.warn(`Element with id '${elementId}' not found.`);
+    }
 }
 // Function to show a specific section
 function showSection(sectionId) {
@@ -677,10 +676,10 @@ function saveUserData(storedBalanceValue, data = {}) {
     }
 }
 
-// Function to load user data (decrypted) from cookies
 function loadUserData() {
     const encryptedData = getCookie('userData');
     const storedUserId = getCookie('userId');
+
     if (encryptedData && storedUserId) {
         try {
             const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, storedUserId);
@@ -698,9 +697,13 @@ function loadUserData() {
             console.error('Error loading user data:', e);
             showAlert('Error loading user data. Please sign in again or reset your data.');
         }
+    } else {
+        // If there is no encrypted data or user ID in the cookies, show the sign-in/sign-up section
+        document.getElementById('sign-in-up').style.display = 'block';
+        document.getElementById('app-header').style.display = 'none';
+        document.getElementById('tab-bar').style.display = 'none';
     }
 }
-
 // Function to export data
 function exportData() {
     const data = {
@@ -992,6 +995,8 @@ function enableQuiz() {
     });
 }
 
+
+
 function updateStoredBalance(decryptedData) {
     const currentUser = usersList.find(user => user.userId === userId);
     
@@ -1052,6 +1057,7 @@ function showTab(tabName) {
     });
     event.target.classList.add('active');
 }
+
 
 // Load user data when the window loads
 window.onload = () => {

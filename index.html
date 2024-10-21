@@ -27,223 +27,226 @@
         <h1><i class="fas fa-igloo"></i> IceBerk</h1>
     </div>
 
-  <div class="section" id="account">
-  <div class="account-container">
-    <div class="user-card">
-      <div class="user-header">
-        <i class="fas fa-user-circle"></i>
-        <h2 id="display-username"></h2>
-      </div>
-      <div class="user-details">
-        <div class="user-item">
-          <i class="fas fa-id-badge"></i>
-          <span>User ID: </span>
-          <span id="display-userId"></span>
-          <button onclick="copyUserId()" class="copy-btn"><i class="fas fa-copy"></i></button>
+    <div class="section" id="account">
+        <div class="account-container">
+            <div class="user-card">
+                <div class="user-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2 id="display-username"></h2>
+                </div>
+                <div class="user-details">
+                    <div class="user-item">
+                        <i class="fas fa-id-badge"></i>
+                        <span>User ID: </span>
+                        <span id="display-userId"></span>
+                        <button onclick="copyUserId()" class="copy-btn"><i class="fas fa-copy"></i></button>
+                    </div>
+                    <div class="user-item">
+                        <i class="fas fa-signal"></i>
+                        <span>Status: </span>
+                        <span id="user-status"></span>
+                    </div>
+                    <div class="user-item">
+                        <i class="fas fa-coins"></i>
+                        <span>Balance: </span>
+                        <span id="coin-balance">0 BERKS</span>
+                    </div>
+                    <div class="user-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Earnings/Hour: </span>
+                        <span id="total-earnings-per-hour">0 BERKS</span>
+                    </div>
+                </div>
+                <button class="logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+            </div>
+
+            <div class="info-card announcement">
+                <h3><i class="fas fa-exclamation-triangle"></i> IMPORTANT ANNOUNCEMENT</h3>
+                <p>We have noticed that some users are cheating on tasks. As IceBerk grows, users will get chances to earn real money <i class="fas fa-money-bill-wave"></i>. However, we will begin banning <i class="fas fa-ban"></i> users caught cheating during our occasional airdrops <i class="fas fa-parachute-box"></i>. Stay fair, play right, and keep earning! <i class="fas fa-star"></i></p>
+            </div>
+
+            <div class="info-card whats-new">
+                <h3><i class="fas fa-newspaper"></i> What's New? <span>(Version 6.5)</span></h3>
+                <ul>
+                    <li><i class="fas fa-tools"></i> Updated User Interface with minor fixes.</li>
+                </ul>
+            </div>
+
+            <div class="info-card hint">
+                <h3><i class="fas fa-lightbulb"></i> Hint</h3>
+                <p>Solve today's quiz to earn 100 BERKS!</p>
+            </div>
         </div>
-        <div class="user-item">
-          <i class="fas fa-signal"></i>
-          <span>Status: </span>
-          <span id="user-status"></span>
-        </div>
-        <div class="user-item">
-          <i class="fas fa-coins"></i>
-          <span>Balance: </span>
-          <span id="coin-balance">0 BERKS</span>
-        </div>
-        <div class="user-item">
-          <i class="fas fa-chart-line"></i>
-          <span>Earnings/Hour: </span>
-          <span id="total-earnings-per-hour">0 BERKS</span>
-        </div>
-      </div>
-      <button class="logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Log Out</button>
     </div>
 
-    <div class="info-card announcement">
-      <h3><i class="fas fa-exclamation-triangle"></i> IMPORTANT ANNOUNCEMENT</h3>
-      <p>We have noticed that some users are cheating on tasks. As IceBerk grows, users will get chances to earn real money <i class="fas fa-money-bill-wave"></i>. However, we will begin banning <i class="fas fa-ban"></i> users caught cheating during our occasional airdrops <i class="fas fa-parachute-box"></i>. Stay fair, play right, and keep earning! <i class="fas fa-star"></i></p>
-    </div>
-
-    <div class="info-card whats-new">
-      <h3><i class="fas fa-newspaper"></i> What's New? <span>(Version 6.5)</span></h3>
-      <ul>
-        <li><i class="fas fa-tools"></i> Updated User Interface with minor fixes.</li>
-      </ul>
-    </div>
-
-    <div class="info-card hint">
-      <h3><i class="fas fa-lightbulb"></i> Hint</h3>
-      <p>Solve today's quiz to earn 100 BERKS!</p>
-    </div>
-  </div>
-</div>
     <div class="section" id="earn">
-  <header class="earn-header">
-    <h2><i class="fas fa-igloo"></i> IceBerk</h2>
-    <p>Home for $BAK Coin Hunters</p>
-  </header>
+        <header class="earn-header">
+            <h2><i class="fas fa-igloo"></i> IceBerk</h2>
+            <p>Home for $BAK Coin Hunters</p>
+        </header>
 
-  <div class="earn-grid">
-    <div class="earn-card mini-games">
-      <h3><i class="fas fa-gamepad"></i> Mini Games</h3>
-      <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()" class="btn-play">Play Mini Games</a>
-    </div>
+        <div class="earn-grid">
+            <div class="earn-card mini-games">
+                <h3><i class="fas fa-gamepad"></i> Mini Games</h3>
+                <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()" class="btn-play">Play Mini Games</a>
+            </div>
 
-    <div class="earn-card daily-quiz">
-      <h3><i class="fas fa-question-circle"></i> Daily Quiz</h3>
-      <p id="quiz-question">Which country is known as the "Land of The Rising Sun"?</p>
-      <div class="quiz-options">
-        <button onclick="selectAnswer('A')">A. China</button>
-        <button onclick="selectAnswer('B')">B. Japan</button>
-        <button onclick="selectAnswer('C')">C. South Korea</button>
-        <button onclick="selectAnswer('D')">D. Thailand</button>
-      </div>
-    </div>
+            <div class="earn-card daily-quiz">
+                <h3><i class="fas fa-question-circle"></i> Daily Quiz</h3>
+                <p id="quiz-question">Which country is known as the "Land of The Rising Sun"?</p>
+                <div class="quiz-options">
+                    <button onclick="selectAnswer('A')">A. China</button>
+                    <button onclick="selectAnswer('B')">B. Japan</button>
+                    <button onclick="selectAnswer('C')">C. South Korea</button>
+                    <button onclick="selectAnswer('D')">D. Thailand</button>
+                </div>
+            </div>
 
-    <div class="earn-card tasks">
-      <h3><i class="fas fa-tasks"></i> Tasks</h3>
-      <ul class="task-list">
-        <li>
-          <i class="fab fa-telegram"></i>
-          <a href="https://t.me/tenocoofficial" target="_blank" onclick="completeTask(0.1, 'telegram'); return true;">Join Our Telegram</a>
-          <span class="reward">+0.1 BERKS</span>
-        </li>
-        <li>
-          <i class="fab fa-whatsapp"></i>
-          <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(0.5, 'whatsapp'); return true;">Join Our WhatsApp Channel</a>
-          <span class="reward">+0.5 BERKS</span>
-        </li>
-        <li>
-          <i class="fas fa-user-plus"></i>
-          <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends(); return true;">Invite Friends via @iceberobot</a>
-          <span class="reward">2 BERKS</span>
-        </li>
-        <li>
-          <i class="fas fa-users"></i>
-          <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(0.1, 'iceberk'); return true;">Join the IceBerk Community</a>
-          <span class="reward">+0.1 BERKS</span>
-        </li>
-        <li>
-          <i class="fas fa-cogs"></i>
-          <a href="https://t.me/nim_tech" target="_blank" onclick="completeTask(0.1, 'nimgine'); return true;">Join the Nimgine Tech Community on Telegram</a>
-          <span class="reward">+0.1 BERKS</span>
-        </li>
-        <li>
-          <i class="fab fa-twitter"></i>
-          <a href="https://twitter.com/TEN0C0" target="_blank" onclick="completeTask(0.25, 'twitter'); return true;">Follow us on X (Twitter)</a>
-          <span class="reward">+0.25 BERKS</span>
-        </li>
-        <li>
-          <i class="fas fa-info-circle"></i>
-          <a href="http://tenoco.github.io/TEN0C0/" target="_blank" onclick="completeTask(0.01, 'aboutus'); return true;">View our about us page</a>
-          <span class="reward">+0.01 BERKS</span>
-        </li>
-      </ul>
+            <div class="earn-card tasks">
+                <h3><i class="fas fa-tasks"></i> Tasks</h3>
+                <ul class="task-list">
+                    <li>
+                        <i class="fab fa-telegram"></i>
+                        <a href="https://t.me/tenocoofficial" target="_blank" onclick="completeTask(0.1, 'telegram'); return true;">Join Our Telegram</a>
+                        <span class="reward">+0.1 BERKS</span>
+                    </li>
+                    <li>
+                        <i class="fab fa-whatsapp"></i>
+                        <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(0.5, 'whatsapp'); return true;">Join Our WhatsApp Channel</a>
+                        <span class="reward">+0.5 BERKS</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-user-plus"></i>
+                        <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends(); return true;">Invite Friends via @iceberobot</a>
+                        <span class="reward">2 BERKS</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-users"></i>
+                        <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(0.1, 'iceberk'); return true;">Join the IceBerk Community</a>
+                        <span class="reward">+0.1 BERKS</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-cogs"></i>
+                        <a href="https://t.me/nim_tech" target="_blank" onclick="completeTask(0.1, 'nimgine'); return true;">Join the Nimgine Tech Community on Telegram</a>
+                        <span class="reward">+0.1 BERKS</span>
+                    </li>
+                    <li>
+                        <i class="fab fa-twitter"></i>
+                        <a href="https://twitter.com/TEN0C0" target="_blank" onclick="completeTask(0.25, 'twitter'); return true;">Follow us on X (Twitter)</a>
+                        <span class="reward">+0.25 BERKS</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-info-circle"></i>
+                        <a href="http://tenoco.github.io/TEN0C0/" target="_blank" onclick="completeTask(0.01, 'aboutus'); return true;">View our about us page</a>
+                        <span class="reward">+0.01 BERKS</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
     <div class="section" id="shop">
-    <h2><i class="fas fa-store"></i> Shop</h2>
-    <div class="shop-grid">
-        <div class="shop-item">
-            <i class="fas fa-user-tie"></i>
-            <h3>Assistant</h3>
-            <p>Earns 20 BERKS/hour</p>
-            <span class="price">1,000 BERKS</span>
-            <button onclick="buyAssistant()" id="buyAssistantBtn">Buy</button>
-            <div class="item-info" id="assistantInfo">
-                <p>You own an assistant. It generates 20 BERKS every hour.</p>
-                <p>Next payout in: <span id="assistantCountdown"></span></p>
+        <h2><i class="fas fa-store"></i> Shop</h2>
+        <div class="shop-grid">
+            <div class="shop-item">
+                <i class="fas fa-user-tie"></i>
+                <h3>Assistant</h3>
+                <p>Earns 20 BERKS/hour</p>
+                <span class="price">1,000 BERKS</span>
+                <button onclick="buyAssistant()" id="buyAssistantBtn">Buy</button>
+                <div class="item-info" id="assistantInfo">
+                    <p>You own an assistant. It generates 20 BERKS every hour.</p>
+                    <p>Next payout in: <span id="assistantCountdown"></span></p>
+                </div>
             </div>
-        </div>
-        <div class="shop-item">
-            <i class="fas fa-industry"></i>
-            <h3>Ice Factory</h3>
-            <p>Earns 140 BERKS/hour</p>
-            <span class="price">5,000 BERKS</span>
-            <button onclick="buyIceFactory()" id="buyIceFactoryBtn">Buy</button>
-            <div class="item-info" id="iceFactoryInfo">
-                <p>You own an Ice Factory. It generates 140 BERKS every hour.</p>
-                <p>Next payout in: <span id="iceFactoryCountdown"></span></p>
+            <div class="shop-item">
+                <i class="fas fa-industry"></i>
+                <h3>Ice Factory</h3>
+                <p>Earns 140 BERKS/hour</p>
+                <span class="price">5,000 BERKS</span>
+                <button onclick="buyIceFactory()" id="buyIceFactoryBtn">Buy</button>
+                <div class="item-info" id="iceFactoryInfo">
+                    <p>You own an Ice Factory. It generates 140 BERKS every hour.</p>
+                    <p>Next payout in: <span id="iceFactoryCountdown"></span></p>
+                </div>
             </div>
-        </div>
-        <div class="shop-item">
-            <i class="fas fa-hammer"></i>
-            <h3>IceMiner</h3>
-            <p>Earns 110 BERKS/hour</p>
-            <span class="price">3,500 BERKS</span>
-            <button onclick="buyIceMiner()" id="buyIceMinerBtn">Buy</button>
-            <div class="item-info" id="iceMinerInfo">
-                <p>You own an IceMiner. It generates 110 BERKS every hour.</p>
-                <p>Next payout in: <span id="iceMinerCountdown"></span></p>
+            <div class="shop-item">
+                <i class="fas fa-hammer"></i>
+                <h3>IceMiner</h3>
+                <p>Earns 110 BERKS/hour</p>
+                <span class="price">3,500 BERKS</span>
+                <button onclick="buyIceMiner()" id="buyIceMinerBtn">Buy</button>
+                <div class="item-info" id="iceMinerInfo">
+                    <p>You own an IceMiner. It generates 110 BERKS every hour.</p>
+                    <p>Next payout in: <span id="iceMinerCountdown"></span></p>
+                </div>
             </div>
-        </div>
-        <div class="shop-item">
-            <i class="fas fa-tasks"></i>
-            <h3>Task Manager</h3>
-            <p>Earns 90 BERKS/hour</p>
-            <span class="price">2,000 BERKS</span>
-            <button onclick="buyTaskManager()" id="buyTaskManagerBtn">Buy</button>
-            <div class="item-info" id="taskManagerInfo">
-                <p>You own a Task Manager. It generates 90 BERKS every hour.</p>
-                <p>Next payout in: <span id="taskManagerCountdown"></span></p>
+            <div class="shop-item">
+                <i class="fas fa-tasks"></i>
+                <h3>Task Manager</h3>
+                <p>Earns 90 BERKS/hour</p>
+                <span class="price">2,000 BERKS</span>
+                <button onclick="buyTaskManager()" id="buyTaskManagerBtn">Buy</button>
+                <div class="item-info" id="taskManagerInfo">
+                    <p>You own a Task Manager. It generates 90 BERKS every hour.</p>
+                    <p>Next payout in: <span id="taskManagerCountdown"></span></p>
+                </div>
             </div>
-        </div>
-        <div class="shop-item">
-            <i class="fas fa-vault"></i>
-            <h3>BERK Vault</h3>
-            <p>Earns 200 BERKS/hour</p>
-            <span class="price">8,000 BERKS</span>
-            <button onclick="buyBerkVault()" id="buyBerkVaultBtn">Buy</button>
-            <div class="item-info" id="berkVaultInfo">
-                <p>You own a BERK Vault. It generates 200 BERKS every hour.</p>
-                <p>Next payout in: <span id="berkVaultCountdown"></span></p>
+            <div class="shop-item">
+                <i class="fas fa-vault"></i>
+                <h3>BERK Vault</h3>
+                <p>Earns 200 BERKS/hour</p>
+                <span class="price">8,000 BERKS</span>
+                <button onclick="buyBerkVault()" id="buyBerkVaultBtn">Buy</button>
+                <div class="item-info" id="berkVaultInfo">
+                    <p>You own a BERK Vault. It generates 200 BERKS every hour.</p>
+                    <p>Next payout in: <span id="berkVaultCountdown"></span></p>
+                </div>
             </div>
-        </div>
-        <div class="shop-item">
-            <i class="fas fa-robot"></i>
-            <h3>IceBot</h3>
-            <p>Earns 125 BERKS/hour</p>
-            <span class="price">3,200 BERKS</span>
-            <button onclick="buyIceBot()" id="buyIceBotBtn">Buy</button>
-            <div class="item-info" id="iceBotInfo">
-                <p>You own an IceBot. It generates 125 BERKS every hour.</p>
-                <p>Next payout in: <span id="iceBotCountdown"></span></p>
+            <div class="shop-item">
+                <i class="fas fa-robot"></i>
+                <h3>IceBot</h3>
+                <p>Earns 125 BERKS/hour</p>
+                <span class="price">3,200 BERKS</span>
+                <button onclick="buyIceBot()" id="buyIceBotBtn">Buy</button>
+                <div class="item-info" id="iceBotInfo">
+                    <p>You own an IceBot. It generates 125 BERKS every hour.</p>
+                    <p>Next payout in: <span id="iceBotCountdown"></span></p>
+                </div>
             </div>
-        </div>
-        <div class="shop-item">
-            <i class="fas fa-fire-alt"></i>
-            <h3>Frost Forge</h3>
-            <p>Earns 350 BERKS/hour</p>
-            <span class="price">20,000 BERKS</span>
-            <button onclick="buyFrostForge()" id="buyFrostForgeBtn">Buy</button>
-            <div class="item-info" id="frostForgeInfo">
-                <p>You own a Frost Forge. It generates 350 BERKS every hour.</p>
-                <p>Next payout in: <span id="frostForgeCountdown"></span></p>
+            <div class="shop-item">
+                <i class="fas fa-fire-alt"></i>
+                <h3>Frost Forge</h3>
+                <p>Earns 350 BERKS/hour</p>
+                <span class="price">20,000 BERKS</span>
+                <button onclick="buyFrostForge()" id="buyFrostForgeBtn">Buy</button>
+                <div class="item-info" id="frostForgeInfo">
+                    <p>You own a Frost Forge. It generates 350 BERKS every hour.</p>
+                    <p>Next payout in: <span id="frostForgeCountdown"></span></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="section" id="export">
-    <h2><i class="fas fa-sync-alt"></i> Data</h2>
-    <div class="data-management-container">
-        <div class="data-action">
-            <button onclick="exportData()" class="btn-action btn-export">
-                <i class="fas fa-file-export"></i> Export
-            </button>
-        </div>
-        <div class="data-display">
-            <div id="exported-data" class="data-content"></div>
-        </div>
-        <div class="data-action">
-            <button onclick="importData()" class="btn-action btn-import">
-                <i class="fas fa-file-import"></i> Import
-            </button>
+
+    <div class="section" id="export">
+        <h2><i class="fas fa-sync-alt"></i> Data</h2>
+        <div class="data-management-container">
+            <div class="data-action">
+                <button onclick="exportData()" class="btn-action btn-export">
+                    <i class="fas fa-file-export"></i> Export
+                </button>
+            </div>
+            <div class="data-display">
+                <div id="exported-data" class="data-content"></div>
+            </div>
+            <div class="data-action">
+                <button onclick="importData()" class="btn-action btn-import">
+                    <i class="fas fa-file-import"></i> Import
+                </button>
+            </div>
         </div>
     </div>
-</div>
+
     <div class="section" id="transaction">
     <h2><i class="fas fa-exchange-alt"></i> Transactions</h2>
     <div class="transaction-container">
@@ -269,9 +272,9 @@
     </div>
 </div>
 
-    <div class="footer">© 2024 IceBerk. All rights reserved.</div>
+<div class="footer">© 2024 IceBerk. All rights reserved.</div>
 
-    <div class="tab-bar" id="tab-bar">
+<div class="tab-bar" id="tab-bar">
     <button onclick="showSection('account')" class="tab-btn">
         <i class="fas fa-user"></i>
         <span>Account</span>
@@ -294,9 +297,7 @@
     </button>
 </div>
 
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
