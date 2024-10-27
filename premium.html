@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IceBerk - Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <div class="sign-in-up" id="sign-in-up">
+    <div id="intro-message" class="intro-message" style="display: none;">
+        <i class="fas fa-crown"></i> Welcome to IceBerk Premium! Unlock exclusive rewards and premium features.
+    </div>
+    <input type="text" id="username" placeholder="Enter Premium Username">
+    <input type="text" id="userId" placeholder="Premium Member ID (for sign in)" style="display: none;">
+    <input type="password" id="encryptedData" placeholder="Premium Access Key (for sign in)" style="display: none;">
+    <button onclick="signUp()" id="signUpButton">
+        <i class="fas fa-gem"></i> Join Premium
+    </button>
+    <button onclick="showSignInFields()" id="showSignInButton">
+        <i class="fas fa-crown"></i> Premium Sign In
+    </button>
+    <button onclick="signIn()" id="signInButton" style="display: none;">
+        <i class="fas fa-check-circle"></i> Access Premium
+    </button>
+</div>
+
+<div class="header" id="app-header" style="display: none;">
+    <h1><i class="fas fa-crown"></i> IceBerk Premium</h1>
+</div>
+
+    <div class="section" id="account">
+    <div class="account-container">
+        <div class="user-card">
+            <div class="user-header">
+                <i class="fas fa-crown"></i>
+                <h2 id="display-username"></h2>
+                
+            </div>
+            <div class="user-details">
+                <div class="user-item">
+                    <i class="fas fa-gem"></i>
+                    <span>Premium ID: </span>
+                    <span id="display-userId"></span>
+                    <button onclick="copyUserId()" class="copy-btn"><i class="fas fa-copy"></i></button>
+                </div>
+
+                <div class="user-item">
+                    <i class="fas fa-medal"></i>
+                    <span>Premium Status: </span>
+                    <span id="user-status"></span>
+                </div>
+                <div class="user-item">
+                    <i class="fas fa-coins"></i>
+                    <span>Premium Balance: </span>
+                    <span id="coin-balance">0 BERKS</span>
+                </div>
+                <div class="user-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Premium Earnings/Hour: </span>
+                    <span id="total-earnings-per-hour">0 BERKS</span>
+                    <span style="font-size: 0.8em; color: gold;">(2x Multiplier Active)</span>
+                </div>
+            </div>
+            <button class="logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit Premium Session</button>
+        </div>
+
+        <div class="info-card announcement">
+            <h3><i class="fas fa-star"></i> PREMIUM ANNOUNCEMENT</h3>
+            <p>Exclusive to Premium Members: Upcoming NFT collection drop <i class="fas fa-palette"></i>! Premium members get first access to limited edition IceBerk NFTs <i class="fas fa-gem"></i>. Plus, enjoy 2x BERKS earnings <i class="fas fa-coins"></i> and priority access to all future airdrops <i class="fas fa-parachute-box"></i>. Your premium status gives you an edge! <i class="fas fa-crown"></i></p>
+        </div>
+
+        <div class="info-card whats-new">
+            <h3><i class="fas fa-sparkles"></i> Premium Features <span>(Version 6.5 Premium)</span></h3>
+            <ul>
+                <li><i class="fas fa-bolt"></i> 2x BERKS Earning Multiplier Active</li>
+                <li><i class="fas fa-palette"></i> Exclusive NFT Collection Access</li>
+                <li><i class="fas fa-gift"></i> Priority Airdrop Participation</li>
+                <li><i class="fas fa-robot"></i> AI-Powered Task Assistance</li>
+            </ul>
+        </div>
+
+        <div class="info-card hint">
+            <h3><i class="fas fa-diamond"></i> Premium Tip</h3>
+            <p>Premium members: Complete today's enhanced quiz to earn 10 BERKS! (Regular reward: 5 BERKS)</p>
+        </div>
+    </div>
+</div>
+
+    <div class="section" id="earn">
+    <header class="earn-header">
+        <h2><i class="fas fa-crown"></i> IceBerk Premium</h2>
+        <p>Elite Community for Premium $BAK Hunters</p>
+        <span style="font-size: 0.9em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-left: 8px; display: inline-block; margin-top: 10px;">
+            <i class="fas fa-crown" style="margin-right: 4px;"></i>2x Rewards Active
+        </span>
+    </header>
+
+    <div class="earn-grid">
+        <div class="earn-card mini-games">
+            <h3><i class="fas fa-gamepad"></i> Premium Games</h3>
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-bottom: 10px; display: inline-block;">
+                <i class="fas fa-star" style="margin-right: 4px;"></i>Exclusive Access
+            </span>
+            <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()" class="btn-play">Play Premium Games</a>
+        </div>
+
+        <div class="earn-card daily-quiz">
+            <h3><i class="fas fa-gem"></i> Premium Quiz</h3>
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-bottom: 10px; display: inline-block;">
+                <i class="fas fa-coins" style="margin-right: 4px;"></i>2x Rewards
+            </span>
+            <p id="quiz-question">What is the most valuable cryptocurrency by market cap?</p>
+            <div class="quiz-options">
+                <button onclick="selectAnswer('A')">A. Ethereum</button>
+                <button onclick="selectAnswer('B')">B. Bitcoin</button>
+                <button onclick="selectAnswer('C')">C. BNB</button>
+                <button onclick="selectAnswer('D')">D. XRP</button>
+            </div>
+        </div>
+
+        <div class="earn-card tasks">
+            <h3><i class="fas fa-tasks"></i> Premium Tasks</h3>
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-bottom: 10px; display: inline-block;">
+                <i class="fas fa-bolt" style="margin-right: 4px;"></i>Priority Access
+            </span>
+            <ul class="task-list">
+                <li>
+                    <i class="fab fa-telegram"></i>
+                    <a href="https://t.me/tenocoofficial" target="_blank" onclick="completeTask(0.2, 'telegram'); return true;">Join Premium Telegram</a>
+                    <span class="reward">+0.2 BERKS</span>
+                </li>
+                <li>
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://whatsapp.com/channel/0029VaJMAov0QeajHa2s3w1W" target="_blank" onclick="completeTask(1.0, 'whatsapp'); return true;">Join Premium WhatsApp Channel</a>
+                    <span class="reward">+1.0 BERKS</span>
+                </li>
+                <li>
+                    <i class="fas fa-gem"></i>
+                    <a href="https://t.me/iceberobot" target="_blank" onclick="inviteFriends(); return true;">Premium Referral Program</a>
+                    <span class="reward">4 BERKS</span>
+                </li>
+                <li>
+                    <i class="fas fa-crown"></i>
+                    <a href="https://t.me/iceberkofficial" target="_blank" onclick="completeTask(0.2, 'iceberk'); return true;">Join Premium Community</a>
+                    <span class="reward">+0.2 BERKS</span>
+                </li>
+                <li>
+                    <i class="fas fa-robot"></i>
+                    <a href="https://t.me/nim_tech" target="_blank" onclick="completeTask(0.2, 'nimgine'); return true;">Access Premium Tech Community</a>
+                    <span class="reward">+0.2 BERKS</span>
+                </li>
+                <li>
+                    <i class="fas fa-palette"></i>
+                    <a href="https://twitter.com/TEN0C0" target="_blank" onclick="completeTask(0.5, 'twitter'); return true;">Premium NFT Collection Access</a>
+                    <span class="reward">+0.5 BERKS</span>
+                </li>
+                <li>
+                    <i class="fas fa-gift"></i>
+                    <a href="http://tenoco.github.io/TEN0C0/" target="_blank" onclick="completeTask(0.02, 'aboutus'); return true;">Premium Membership Benefits</a>
+                    <span class="reward">+0.02 BERKS</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+   <div class="section" id="shop">
+    <h2><i class="fas fa-crown"></i> Premium Shop</h2>
+    <span style="font-size: 0.9em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; display: inline-block; margin-bottom: 20px;">
+        <i class="fas fa-bolt" style="margin-right: 4px;"></i>Premium Benefits Active
+    </span>
+    
+    <div class="shop-grid">
+        <!-- Premium Exclusive Items -->
+        <div class="shop-item">
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; position: absolute; top: 10px; right: 10px;">
+                <i class="" style="margin-right: 4px;"></i>Free
+            </span>
+            <i class="fas fa-user-tie"></i>
+            <h3>Premium Assistant</h3>
+            <p>Earns 40 BERKS/hour</p>
+            <span class="price">1,000 BERKS</span>
+            <button onclick="buyAssistant()" id="buyAssistantBtn">Free for Premium</button>
+            <div class="item-info" id="assistantInfo">
+                <p>You own a Premium Assistant. It generates 40 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="assistantCountdown"></span></p>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; position: absolute; top: 10px; right: 10px;">
+                <i class="" style="margin-right: 4px;"></i>Free
+            </span>
+            <i class="fas fa-industry"></i>
+            <h3>Premium Ice Factory</h3>
+            <p>Earns 280 BERKS/hour</p>
+            <span class="price">5,000 BERKS</span>
+            <button onclick="buyIceFactory()" id="buyIceFactoryBtn">Free for Premium</button>
+            <div class="item-info" id="iceFactoryInfo">
+                <p>You own a Premium Ice Factory. It generates 280 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="iceFactoryCountdown"></span></p>
+            </div>
+        </div>
+
+        <!-- Regular Items with Premium Benefits -->
+        <div class="shop-item">
+            <i class="fas fa-hammer"></i>
+            <h3>Premium IceMiner</h3>
+            <p>Earns 220 BERKS/hour</p>
+            <span class="price">3,500 BERKS</span>
+            <button onclick="buyIceMiner()" id="buyIceMinerBtn">Buy</button>
+            <div class="item-info" id="iceMinerInfo">
+                <p>You own a Premium IceMiner. It generates 220 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="iceMinerCountdown"></span></p>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <i class="fas fa-tasks"></i>
+            <h3>Premium Task Manager</h3>
+            <p>Earns 180 BERKS/hour</p>
+            <span class="price">2,000 BERKS</span>
+            <button onclick="buyTaskManager()" id="buyTaskManagerBtn">Buy</button>
+            <div class="item-info" id="taskManagerInfo">
+                <p>You own a Premium Task Manager. It generates 180 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="taskManagerCountdown"></span></p>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <i class="fas fa-vault"></i>
+            <h3>Premium BERK Vault</h3>
+            <p>Earns 400 BERKS/hour</p>
+            <span class="price">8,000 BERKS</span>
+            <button onclick="buyBerkVault()" id="buyBerkVaultBtn">Buy</button>
+            <div class="item-info" id="berkVaultInfo">
+                <p>You own a Premium BERK Vault. It generates 400 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="berkVaultCountdown"></span></p>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <i class="fas fa-robot"></i>
+            <h3>Premium IceBot</h3>
+            <p>Earns 250 BERKS/hour</p>
+            <span class="price">3,200 BERKS</span>
+            <button onclick="buyIceBot()" id="buyIceBotBtn">Buy</button>
+            <div class="item-info" id="iceBotInfo">
+                <p>You own a Premium IceBot. It generates 250 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="iceBotCountdown"></span></p>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <i class="fas fa-fire-alt"></i>
+            <h3>Premium Frost Forge</h3>
+            <p>Earns 700 BERKS/hour</p>
+            <span class="price">20,000 BERKS</span>
+            <button onclick="buyFrostForge()" id="buyFrostForgeBtn">Buy</button>
+            <div class="item-info" id="frostForgeInfo">
+                <p>You own a Premium Frost Forge. It generates 700 BERKS every hour (2x regular rate).</p>
+                <p>Next payout in: <span id="frostForgeCountdown"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section" id="export">
+        <h2><i class="fas fa-sync-alt"></i> Data</h2>
+        <div class="data-management-container">
+            <div class="data-action">
+                <button onclick="exportData()" class="btn-action btn-export">
+                    <i class="fas fa-file-export"></i> Export
+                </button>
+            </div>
+            <div class="data-display">
+                <div id="exported-data" class="data-content"></div>
+            </div>
+            <div class="data-action">
+                <button onclick="importData()" class="btn-action btn-import">
+                    <i class="fas fa-file-import"></i> Import
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="transaction">
+    <h2><i class="fas fa-exchange-alt"></i> Transactions</h2>
+    <div class="transaction-container">
+        <div class="transaction-tab">
+            <button class="tab-btn active" onclick="showTab('transfer')">Transfer</button>
+            <button class="tab-btn" onclick="showTab('receive')">Receive</button>
+        </div>
+        <div id="transfer-section" class="tab-content">
+            <input type="text" id="recipient-name" placeholder="Recipient Name">
+            <input type="text" id="recipient-id" placeholder="Recipient User ID">
+            <input type="number" id="transfer-amount" placeholder="Amount to Transfer">
+            <input type="password" id="user-encrypted-data" placeholder="Your Encrypted Data">
+            <button onclick="transferBerks()" class="action-btn"><i class="fas fa-share"></i> Transfer</button>
+        </div>
+        <div id="receive-section" class="tab-content" style="display:none;">
+            <input type="text" id="receive-code" placeholder="Enter Received Code">
+            <button onclick="receiveBerks()" class="action-btn"><i class="fas fa-check"></i> Receive</button>
+        </div>
+        <div id="transaction-code-container" style="display: none;">
+            <textarea id="transaction-code" readonly></textarea>
+            <button onclick="copyTransactionCode()" class="action-btn"><i class="fas fa-copy"></i> Copy Code</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add the new Other section (add this before the footer) -->
+<div class="section" id="other" style="display: none;">
+    <header class="earn-header">
+        <h2><i class="fas fa-ellipsis-h"></i> Premium Features</h2>
+        <p>Exclusive Access to Advanced BERKS Analytics</p>
+        <span style="font-size: 0.9em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-left: 8px; display: inline-block; margin-top: 10px;">
+            <i class="fas fa-crown" style="margin-right: 4px;"></i>Premium Analytics Active
+        </span>
+    </header>
+
+    <div class="earn-grid">
+        <div class="earn-card leaderboard-card">
+            <h3><i class="fas fa-trophy"></i> Elite BERKS Leaderboard</h3>
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-bottom: 10px; display: inline-block;">
+                <i class="fas fa-chart-line" style="margin-right: 4px;"></i>Live Updates
+            </span>
+            
+            <div class="your-rank">
+                <h4>Premium Position</h4>
+                <div class="rank-item">
+                    <span class="rank-position" style="color: gold;">#<span id="your-rank-position">--</span></span>
+                    <span class="rank-username" id="your-rank-username">You</span>
+                    <span class="rank-balance" id="your-rank-balance">0 BERKS</span>
+                </div>
+            </div>
+            
+            <div class="top-ranks">
+                <h4>Elite Holders</h4>
+                <div class="rank-item">
+                    <span class="rank-position">👑</span>
+                    <span class="rank-username" id="first-place-username">--</span>
+                    <span class="rank-balance" id="first-place-balance">0 BERKS</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-position">🏆</span>
+                    <span class="rank-username" id="second-place-username">--</span>
+                    <span class="rank-balance" id="second-place-balance">0 BERKS</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-position">⭐</span>
+                    <span class="rank-username" id="third-place-username">--</span>
+                    <span class="rank-balance" id="third-place-balance">0 BERKS</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="earn-card market-card">
+            <h3><i class="fas fa-chart-line"></i> Premium Market Analysis</h3>
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-bottom: 10px; display: inline-block;">
+                <i class="fas fa-bolt" style="margin-right: 4px;"></i>Real-Time Data
+            </span>
+            
+            <div class="market-rate">
+                <div class="rate-display">
+                    <span>1 BERK = </span>
+                    <span id="berk-rate">0.001</span>
+                    <span> NAIRA</span>
+                </div>
+                <div class="rate-change" id="rate-change">
+                    <span id="rate-direction" class="rate-up">↑</span>
+                    <span id="rate-percentage">0.00%</span>
+                </div>
+            </div>
+            <div class="market-chart" id="market-chart">
+                <!-- Chart will be rendered here -->
+            </div>
+        </div>
+
+        <div class="earn-card airdrop-card">
+            <h3><i class="fas fa-parachute-box"></i> Premium Airdrop Access</h3>
+            <span style="font-size: 0.8em; color: gold; background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border: 1px solid gold; border-radius: 4px; margin-bottom: 10px; display: inline-block;">
+                <i class="fas fa-gem" style="margin-right: 4px;"></i>2x Allocation
+            </span>
+            
+            <div class="airdrop-status">
+                <div class="status-item">
+                    <span class="status-label">Premium Status:</span>
+                    <span class="status-value" id="airdrop-status" style="color: gold;">Active</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Premium Pool:</span>
+                    <span class="status-value">200,000 NARIA</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Priority Access:</span>
+                    <span class="status-value" id="eligibility-status">Enabled</span>
+                </div>
+            </div>
+            
+            <div class="airdrop-requirements">
+                <h4>Premium Benefits:</h4>
+                <ul>
+                    <li><i class="fas fa-check-circle" style="color: gold;"></i> 2x Airdrop Allocation</li>
+                    <li><i class="fas fa-check-circle" style="color: gold;"></i> Priority Distribution</li>
+                    <li><i class="fas fa-check-circle" style="color: gold;"></i> Exclusive Bonus Rewards</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">© 2024 IceBerk. All rights reserved.</div>
+
+<!-- First, add a new button to the tab bar div (before the closing div tag) -->
+<div class="tab-bar" id="tab-bar">
+    <button onclick="showSection('account')" class="tab-btn">
+        <i class="fas fa-user"></i>
+        <span>Account</span>
+    </button>
+    <button onclick="showSection('earn')" class="tab-btn">
+        <i class="fas fa-coins"></i>
+        <span>Earn</span>
+    </button>
+    <button onclick="showSection('shop')" class="tab-btn">
+        <i class="fas fa-store"></i>
+        <span>Shop</span>
+    </button>
+    <button onclick="showSection('transaction')" class="tab-btn">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Transfer</span>
+    </button>
+    <button onclick="showSection('export')" class="tab-btn">
+        <i class="fas fa-file-export"></i>
+        <span>Export</span>
+    </button>
+    <button onclick="showSection('other')" class="tab-btn">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Other</span>
+    </button>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="premiumScript.js"></script>
+</body>
+</html>

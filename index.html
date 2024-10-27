@@ -10,6 +10,29 @@
 </head>
 <body>
     <div id="alert" class="alert"></div>
+    <!-- Add this after the opening body tag -->
+<div id="premium-popup" class="premium-popup">
+    <div class="premium-content">
+        <i class="fas fa-crown premium-icon"></i>
+        <h2>Upgrade to Premium!</h2>
+        <div class="premium-benefits">
+            <ul>
+                <li><i class="fas fa-gift"></i> Get 10000 FREE BERKS</li>
+                <li><i class="fas fa-store"></i> Unlock 2 New Shop Items</li>
+                <li><i class="fas fa-parachute-box"></i> Higher Airdrop Allocation</li>
+            </ul>
+        </div>
+        <div class="premium-price">
+            <span>Only 500 NARIA</span>
+        </div>
+        <button onclick="window.location.href='https://t.me/TENOCO'" class="premium-btn">
+            Upgrade Now
+        </button>
+        <button onclick="closePremiumPopup()" class="close-btn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
 
     <div class="sign-in-up" id="sign-in-up">
         <div id="intro-message" class="intro-message" style="display: none;">
@@ -41,6 +64,16 @@
                         <span id="display-userId"></span>
                         <button onclick="copyUserId()" class="copy-btn"><i class="fas fa-copy"></i></button>
                     </div>
+                    <!-- Add this to the HTML, right after the user-details div in the account section -->
+<div class="user-item premium-status">
+    <i class="fas fa-crown"></i>
+    <span>Membership: </span>
+    <span id="premium-status">Free</span>
+    <button onclick="window.location.href='https://t.me/TENOCO'" class="upgrade-btn" id="upgrade-btn">
+        <i class="fas fa-arrow-up"></i> Upgrade to Premium
+    </button>
+</div>
+
                     <div class="user-item">
                         <i class="fas fa-signal"></i>
                         <span>Status: </span>
@@ -272,8 +305,89 @@
     </div>
 </div>
 
+<!-- Add the new Other section (add this before the footer) -->
+<div class="section" id="other" style="display: none;">
+    <h2><i class="fas fa-ellipsis-h"></i> Other Features</h2>
+    <div class="other-container">
+        <div class="leaderboard-card">
+            <h3><i class="fas fa-trophy"></i> BERKS Leaderboard</h3>
+            <div class="your-rank">
+                <h4>Your Position</h4>
+                <div class="rank-item">
+                    <span class="rank-position">#<span id="your-rank-position">--</span></span>
+                    <span class="rank-username" id="your-rank-username">You</span>
+                    <span class="rank-balance" id="your-rank-balance">0 BERKS</span>
+                </div>
+            </div>
+            <div class="top-ranks">
+                <h4>Top Holders</h4>
+                <div class="rank-item">
+                    <span class="rank-position">🥇</span>
+                    <span class="rank-username" id="first-place-username">--</span>
+                    <span class="rank-balance" id="first-place-balance">0 BERKS</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-position">🥈</span>
+                    <span class="rank-username" id="second-place-username">--</span>
+                    <span class="rank-balance" id="second-place-balance">0 BERKS</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-position">🥉</span>
+                    <span class="rank-username" id="third-place-username">--</span>
+                    <span class="rank-balance" id="third-place-balance">0 BERKS</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="market-card">
+            <h3><i class="fas fa-chart-line"></i> BERK Market</h3>
+            <div class="market-rate">
+                <div class="rate-display">
+                    <span>1 BERK = </span>
+                    <span id="berk-rate">0.001</span>
+                    <span> NAIRA</span>
+                </div>
+                <div class="rate-change" id="rate-change">
+                    <span id="rate-direction" class="rate-up">↑</span>
+                    <span id="rate-percentage">0.00%</span>
+                </div>
+            </div>
+            <div class="market-chart" id="market-chart">
+                <!-- Chart will be rendered here -->
+            </div>
+        </div>
+
+        <div class="airdrop-card">
+            <h3><i class="fas fa-parachute-box"></i> Current Airdrop</h3>
+            <div class="airdrop-status">
+                <div class="status-item">
+                    <span class="status-label">Status:</span>
+                    <span class="status-value" id="airdrop-status">Active</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Reward Pool:</span>
+                    <span class="status-value">100,000 NARIA</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Your Eligibility:</span>
+                    <span class="status-value" id="eligibility-status">Coming Soon...</span>
+                </div>
+            </div>
+            <div class="airdrop-requirements">
+                <h4>Requirements:</h4>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Hold minimum 100 BERKS</li>
+                    <li><i class="fas fa-check-circle"></i> Complete all basic tasks</li>
+                    <li><i class="fas fa-check-circle"></i> Own at least one shop item</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>    
+    
 <div class="footer">© 2024 IceBerk. All rights reserved.</div>
 
+<!-- First, add a new button to the tab bar div (before the closing div tag) -->
 <div class="tab-bar" id="tab-bar">
     <button onclick="showSection('account')" class="tab-btn">
         <i class="fas fa-user"></i>
@@ -295,7 +409,12 @@
         <i class="fas fa-file-export"></i>
         <span>Export</span>
     </button>
+    <button onclick="showSection('other')" class="tab-btn">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>Other</span>
+    </button>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script src="script.js"></script>
