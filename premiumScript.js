@@ -28,11 +28,12 @@ let transactionHistory = [];
 let receivedCodes = []
 let storedBalance = 0;
 let usersList = [
-    { userId: 'PdGdx3WV8vph1Tz', username: 'iCEBERK', status: 'premium', balanceChange: '', expiryTime: 15 }, // Add 100 BERKS with a 60-second expiry
+    { userId: 'PdGdx3WV8vph1Tz', username: 'Enoch', status: 'safe', balanceChange: '', expiryTime: 15 }, // Add 100 BERKS with a 60-second expiry
     { userId: 'N82H9GmK32khTwY', username: 'Juwon', status: 'safe', balanceChange: '-50', expiryTime: 120 },  // Subtract 50 BERKS with a 120-second expiry
     { userId: 'CwcPH7UXubkZOM2', username: 'Enoch', status: 'premium', balanceChange: '200', expiryTime: 30 } // Set to 200 BERKS with a 30-second expiry
     // Add more users as needed
 ];
+
 
 // Function to generate a random user ID
 function generateUserId() {
@@ -809,7 +810,7 @@ function selectAnswer(option) {
 
     setCookie('lastQuizDate', today, 1);
 
-    let correctAnswer = 'B';
+    let correctAnswer = 'A';
     if (option === correctAnswer) {
         coinBalance += 10;
         document.getElementById('coin-balance').textContent = coinBalance;
