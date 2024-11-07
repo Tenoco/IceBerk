@@ -295,7 +295,6 @@ function inviteFriends() {
     }
 }
 
-// Function to play mini games
 function playMiniGames() {
     const currentTime = Date.now();
     const eightHoursInMillis = 8 * 60 * 60 * 1000;
@@ -305,19 +304,28 @@ function playMiniGames() {
         let playDuration = 0;
         let totalCoinsEarned = 0;
 
+        // Reward 10 BERKS every minute
         const rewardInterval = setInterval(() => {
-            playDuration += 0.60;
-            const coinsEarned = Math.min(playDuration / 60000 * 1000, 60000);
-            coinBalance += coinsEarned;
-            totalCoinsEarned += coinsEarned;
+            const rewardAmount = 10; // Fixed reward of 10 BERKS per minute
+            playDuration += 1;
+            coinBalance += rewardAmount;
+            totalCoinsEarned += rewardAmount;
+            
+            // Update the display
             document.getElementById('coin-balance').textContent = Math.floor(coinBalance);
+            
+            // Show alert for each reward
+            showAlert(`You just earned ${rewardAmount} BERKS! Keep playing!`);
+            
+            // Save after each reward
             saveUserData();
-        }, 60000);
+        }, 60000); // Run every minute (60000 milliseconds)
 
+        // Stop after one hour
         setTimeout(() => {
             clearInterval(rewardInterval);
-            showAlert(`You have earned ${Math.floor(totalCoinsEarned)} BERKS for playing Mini Games!`);
-        }, 60 * 60 * 1000);
+            showAlert(`Mini Games session ended! Total earnings: ${Math.floor(totalCoinsEarned)} BERKS`);
+        }, 60 * 60 * 1000); // One hour in milliseconds
     } else {
         const remainingTime = Math.ceil((eightHoursInMillis - (currentTime - lastPlayedTime)) / (60 * 60 * 1000));
         showAlert(`You can play Mini Games again in ${remainingTime} hours.`);
