@@ -1,9 +1,12 @@
+/* Google Fonts Import for Pixelify Sans */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
 /* Base Styles */
 body {
     background: linear-gradient(135deg, #1a1a1a, #101010);
     color: #00ffaa;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: 900;
+    font-family: "Pixelify Sans", serif;
+    font-weight: 600;
     margin: 0;
     padding: 0;
     display: flex;
@@ -13,6 +16,14 @@ body {
     text-align: center;
     overflow-x: hidden;
     scroll-behavior: smooth;
+}
+
+/* Pixelify Sans Font Definition */
+.pixelify-sans-custom {
+  font-family: "Pixelify Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
 
 /* Header Styles */
