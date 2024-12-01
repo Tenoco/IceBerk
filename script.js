@@ -817,7 +817,7 @@ function selectAnswer(option) {
 
     setCookie('lastQuizDate', today, 1);
 
-    let correctAnswer = 'A';
+    let correctAnswer = 'D';
     if (option === correctAnswer) {
         coinBalance += 5;
         document.getElementById('coin-balance').textContent = coinBalance;
