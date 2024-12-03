@@ -28,7 +28,7 @@ body {
 
 /* Header Styles */
 .header {
-    background: #1c1c1c; /* Dark background */
+    background: #2A5D2A; /* Deep Christmas Green */
     padding: 10px 15px; /* Reduced padding for a smaller header */
     display: flex;
     justify-content: space-between;
@@ -37,6 +37,19 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 3px solid #1E4D1E; /* Slightly darker green border */
+}
+
+/* Optional: Add a festive text color for the header */
+.header h1 {
+    color: #FFFFFF; /* Crisp white for contrast */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+}
+
+/* Optional: Make the header icons pop */
+.header i {
+    color: #FFFFFF; /* White icons */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Slight glow effect */
 }
 
 .header img {
@@ -76,17 +89,64 @@ body {
 }
 
 /* Announcement Card */
-.annoucement {
-    background-color: #1c1c1c; /* Dark background */
+/* Announcement Card */
+.announcement {
+    background-color: #2C5F2D; /* Deep Christmas Green */
     padding: 10px; /* Reduced padding for a smaller card */
     border-radius: 8px; /* Slightly smaller border radius */
     margin: 15px; /* Reduced margin */
-    color: #777; /* Text color for announcements */
+    color: #FFFFFF; /* White text for better readability */
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Softer shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Slightly enhanced shadow */
     font-size: 0.9rem; /* Smaller font size for text */
+    border: 2px solid #1E4D1E; /* Darker green border */
+    position: relative; /* For positioning pseudo-elements */
+}
+
+/* Optional: Add festive decorative elements */
+.announcement::before,
+.announcement::after {
+    content: '❄️'; /* Snowflake decorations */
+    position: absolute;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.announcement::before {
+    top: 5px;
+    left: 10px;
+}
+
+.announcement::after {
+    bottom: 5px;
+    right: 10px;
+}
+
+/* Styling for the announcement icons */
+.announcement i {
+    color: #FFD700; /* Gold color for icons to stand out */
+    margin-right: 5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Slight glow effect */
+}
+
+/* Highlight important text */
+.announcement h3 {
+    color: #FFFFFF; /* White heading */
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+}
+
+/* Ensure links are visible and festive */
+.announcement a {
+    color: #FFD700; /* Gold color for links */
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.announcement a:hover {
+    color: #FFFFFF; /* White on hover */
 }
 
 
@@ -506,23 +566,47 @@ a:active {
 }
 
 .user-card, .info-card {
-  background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+  background: linear-gradient(145deg, #121212, #1E1E1E); /* Deep dark gradient */
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 8px 32px rgba(0, 255, 170, 0.1);
-  border: 1px solid rgba(0, 255, 170, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Dark shadow */
+  border: 1px solid rgba(50, 50, 50, 0.5); /* Dark border */
   transition: all 0.3s ease;
+  color: #FFFFFF; /* White text */
+  position: relative;
+  overflow: hidden;
 }
 
 .user-card:hover, .info-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 48px rgba(0, 255, 170, 0.2);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(145deg, #1E1E1E, #121212);
 }
 
 .user-header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  border-bottom: 2px solid rgba(50, 50, 50, 0.5);
+  padding-bottom: 10px;
+}
+
+.user-header i {
+  color: #888; /* Muted icon color */
+  margin-right: 10px;
+}
+
+.user-details {
+  color: #CCCCCC; /* Soft gray for details */
+}
+
+.user-item {
+  transition: background-color 0.3s ease;
+}
+
+.user-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
 }
 
 .user-header i {

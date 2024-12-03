@@ -12,26 +12,28 @@
     <div id="alert" class="alert"></div>
     <!-- Add this after the opening body tag -->
 <div id="premium-popup" class="premium-popup">
-    <div class="premium-content">
-        <i class="fas fa-crown premium-icon"></i>
-        <h2>Upgrade to Premium!</h2>
-        <div class="premium-benefits">
-            <ul>
-                <li><i class="fas fa-gift"></i> Get 10000 FREE BERKS</li>
-                <li><i class="fas fa-store"></i> Unlock 2 New Shop Items</li>
-                <li><i class="fas fa-parachute-box"></i> Higher Airdrop Allocation</li>
-            </ul>
+        <div class="premium-content">
+            <i class="fas fa-gift premium-icon"></i>
+            <h2>🎁 Upgrade to Premium Holiday Package! 🎄</h2>
+            <div class="premium-benefits">
+                <ul>
+                    <li><i class="fas fa-candy-cane"></i> Get 10000 FESTIVE BERKS</li>
+                    <li><i class="fas fa-tree"></i> Unlock 2 Christmas Shop Items</li>
+                    <li><i class="fas fa-snowflake"></i> Higher Holiday Airdrop Allocation</li>
+                </ul>
+            </div>
+            <div class="premium-price">
+                <span>Only 5000 NARIA 🌟</span>
+            </div>
+            <button onclick="window.location.href='https://t.me/TENOCO'" class="premium-btn">
+                🎅 Upgrade Now 🎅
+            </button>
+            <button onclick="closePremiumPopup()" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        <div class="premium-price">
-            <span>Only 5000 NARIA</span>
-        </div>
-        <button onclick="window.location.href='https://t.me/TENOCO'" class="premium-btn">
-            Upgrade Now
-        </button>
-        <button onclick="closePremiumPopup()" class="close-btn">
-            <i class="fas fa-times"></i>
-        </button>
     </div>
+
 </div>
 
     <div class="sign-in-up" id="sign-in-up">
@@ -47,7 +49,7 @@
     </div>
 
     <div class="header" id="app-header" style="display: none;">
-        <h1><i class="fas fa-igloo"></i> IceBerk</h1>
+        <h1><i class="fas fa-snowman"></i> IceBerk ❄️</h1>
     </div>
 
     <div class="section" id="account">
@@ -114,9 +116,10 @@
 
     <div class="section" id="earn">
         <header class="earn-header">
-            <h2><i class="fas fa-igloo"></i> IceBerk</h2>
-            <p>Home for $BAK Coin Hunters</p>
+            <h2><i class="fas fa-snowflake"></i> IceBerk 🎄</h2>
+            <p>Home for Festive $BAK Coin Hunters 🎅</p>
         </header>
+
 
         <div class="earn-grid">
             <div class="earn-card mini-games">
@@ -124,16 +127,17 @@
                 <a href="https://tenoco.github.io/IceBerk-Mini-Games/" target="_blank" onclick="playMiniGames()" class="btn-play">Play Mini Games</a>
             </div>
 
-            <div class="earn-card daily-quiz">
-                <h3><i class="fas fa-question-circle"></i> Daily Quiz</h3>
-                <p id="quiz-question">Which popular cryptocurrency shares its name with a Christmas song?</p>
-                <div class="quiz-options">
-                    <button onclick="selectAnswer('A')">A. Ethereum</button>
-                    <button onclick="selectAnswer('B')">B. Litecoin</button>
-                    <button onclick="selectAnswer('C')">C. Cardano</button>
-                    <button onclick="selectAnswer('D')">D. Carolcoin</button>
-                </div>
+            <!-- The daily quiz now has a Christmas theme -->
+        <div class="earn-card daily-quiz">
+            <h3><i class="fas fa-gift"></i> Holiday Quiz</h3>
+            <p id="quiz-question">Which popular cryptocurrency shares its name with a Christmas song? 🎄</p>
+            <div class="quiz-options">
+                <button onclick="selectAnswer('A')">A. Ethereum ❄️</button>
+                <button onclick="selectAnswer('B')">B. Litecoin 🎅</button>
+                <button onclick="selectAnswer('C')">C. Cardano 🎁</button>
+                <button onclick="selectAnswer('D')">D. Carolcoin 🔔</button>
             </div>
+        </div>
 
             <div class="earn-card tasks">
                 <h3><i class="fas fa-tasks"></i> Tasks</h3>
@@ -374,7 +378,7 @@
     </div>
 </div>    
     
-<div class="footer">© 2024 IceBerk. All rights reserved.</div>
+<div class="footer">© 2024 IceBerk 🎄 Merry Christmas! All rights reserved. ❄️</div>
 
 <!-- First, add a new button to the tab bar div (before the closing div tag) -->
 <div class="tab-bar" id="tab-bar">
