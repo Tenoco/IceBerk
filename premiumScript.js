@@ -817,11 +817,11 @@ function selectAnswer(option) {
 
     setCookie('lastQuizDate', today, 1);
 
-    let correctAnswer = 'D';
+    let correctAnswer = 'C';
     if (option === correctAnswer) {
-        coinBalance += 10;
+        coinBalance += 20;
         document.getElementById('coin-balance').textContent = coinBalance;
-        showAlert('Correct! You have earned 10 BERKS.');
+        showAlert('Correct! You have earned 20 BERK.');
     } else {
         showAlert('Incorrect answer. Better luck next time!');
     }

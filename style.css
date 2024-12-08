@@ -7,6 +7,7 @@ body {
     color: #00ffaa;
     font-family: "Pixelify Sans", serif;
     font-weight: 600;
+    font-size: 12px; /* Reduced base font size */
     margin: 0;
     padding: 0;
     display: flex;
@@ -24,21 +25,51 @@ body {
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+  font-size: 10px; /* Smaller custom font size */
 }
 
 /* Header Styles */
 .header {
     background: #2A5D2A; /* Deep Christmas Green */
-    padding: 10px 15px; /* Reduced padding for a smaller header */
+    padding: 5px 10px; /* Further reduced padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Softened shadow */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Lighter shadow */
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 3px solid #1E4D1E; /* Slightly darker green border */
+    border-bottom: 2px solid #1E4D1E; /* Thinner border */
+    font-size: 0.8em; /* Smaller font size for header */
 }
+
+/* General Widget Reduction */
+.widget {
+    font-size: 0.7em; /* Smaller text for widgets */
+    padding: 5px; /* Reduced padding */
+    margin: 5px; /* Reduced margin */
+}
+
+/* Additional Scaling Adjustments */
+h1 { font-size: 1.2em; }
+h2 { font-size: 1em; }
+h3 { font-size: 0.9em; }
+
+/* Button Styles */
+.btn {
+    font-size: 0.6em;     /* Reduced from 0.7em */
+    padding: 2px 6px;     /* Reduced from 3px 8px */
+    margin: 1px;          /* Reduced from 2px */
+    line-height: 1.2;     /* Added to maintain compact text alignment */
+    min-width: auto;      /* Prevent unnecessary width */
+}
+
+/* Input Styles */
+input, select, textarea {
+    font-size: 0.8em;
+    padding: 2px 5px;
+    margin: 3px;
+} 
 
 /* Optional: Add a festive text color for the header */
 .header h1 {
