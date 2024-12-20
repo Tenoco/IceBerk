@@ -1,13 +1,13 @@
-/* Google Fonts Import for Pixelify Sans */
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+/* Google Fonts Import for JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 /* Base Styles */
 body {
-    background: linear-gradient(135deg, #1a1a1a, #101010);
-    color: #00ffaa;
-    font-family: "Pixelify Sans", serif;
-    font-weight: 600;
-    font-size: 12px; /* Reduced base font size */
+    background: #1e1e1e; /* Dark background */
+    color: #00ffaa; /* Green text color */
+    font-family: 'JetBrains Mono', monospace; /* JetBrains Mono font */
+    font-weight: 400; /* Standard font weight */
+    font-size: 16px; /* Base font size */
     margin: 0;
     padding: 0;
     display: flex;
@@ -19,167 +19,185 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Pixelify Sans Font Definition */
-.pixelify-sans-custom {
-  font-family: "Pixelify Sans", serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-  font-size: 10px; /* Smaller custom font size */
-}
-
 /* Header Styles */
 .header {
-    background: #2A5D2A; /* Deep Christmas Green */
-    padding: 5px 10px; /* Further reduced padding */
+    background: #2a2a2a; /* Dark header background */
+    padding: 10px 20px; /* Adequate padding for spacing */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Lighter shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 2px solid #1E4D1E; /* Thinner border */
-    font-size: 0.8em; /* Smaller font size for header */
+    border-bottom: 1px solid #444; /* Light border */
+    font-size: 1em; /* Base font size for header */
 }
 
-/* General Widget Reduction */
+/* General Widget Styles */
 .widget {
-    font-size: 0.7em; /* Smaller text for widgets */
-    padding: 5px; /* Reduced padding */
-    margin: 5px; /* Reduced margin */
+    font-size: 1em; /* Base font size */
+    padding: 10px; /* Standard padding */
+    margin: 10px; /* Standard margin */
+    background: #2a2a2a; /* Dark widget background */
+    color: #00ffaa; /* Green text color */
+    border: 1px solid #444; /* Light border */
+    border-radius: 4px; /* Rounded corners */
 }
 
-/* Additional Scaling Adjustments */
-h1 { font-size: 1.2em; }
-h2 { font-size: 1em; }
-h3 { font-size: 0.9em; }
+/* Heading Styles */
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
 
 /* Button Styles */
 .btn {
-    font-size: 0.6em;     /* Reduced from 0.7em */
-    padding: 2px 6px;     /* Reduced from 3px 8px */
-    margin: 1px;          /* Reduced from 2px */
-    line-height: 1.2;     /* Added to maintain compact text alignment */
-    min-width: auto;      /* Prevent unnecessary width */
+    font-size: 1em; /* Standard font size */
+    padding: 8px 16px; /* Standard padding */
+    margin: 5px; /* Standard margin */
+    line-height: 1.5; /* Good line height */
+    min-width: auto; /* Prevent unnecessary width */
+    background-color: #00ffaa; /* Green background color */
+    color: #1e1e1e; /* Dark text color */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.btn:hover {
+    background-color: #00cc88; /* Darker green on hover */
 }
 
 /* Input Styles */
 input, select, textarea {
-    font-size: 0.8em;
-    padding: 2px 5px;
-    margin: 3px;
-} 
-
-/* Optional: Add a festive text color for the header */
-.header h1 {
-    color: #FFFFFF; /* Crisp white for contrast */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+    font-size: 1em;
+    padding: 8px 10px;
+    margin: 5px;
+    border: 1px solid #444; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    background: #2a2a2a; /* Dark background */
+    color: #00ffaa; /* Green text color */
+    transition: border-color 0.3s; /* Smooth transition */
 }
 
-/* Optional: Make the header icons pop */
+input:focus, select:focus, textarea:focus {
+    border-color: #00ffaa; /* Green border on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Header Title Styles */
+.header h1 {
+    color: #00ffaa; /* Green text color */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Header Icon Styles */
 .header i {
-    color: #FFFFFF; /* White icons */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Slight glow effect */
+    color: #00ffaa; /* Green icons */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Slight glow effect */
 }
 
 .header img {
-    height: 30px; /* Smaller image height */
-    margin-right: 15px; /* Reduced margin */
+    height: 40px; /* Adequate image height */
+    margin-right: 10px; /* Standard margin */
 }
 
 .header nav {
     display: flex;
-    gap: 15px; /* Reduced gap between nav items */
+    gap: 20px; /* Standard gap between nav items */
 }
 
 .header nav a {
-    color: #00ffaa; /* Text color */
+    color: #00ffaa; /* Green text color */
     text-decoration: none;
-    font-weight: 600; /* Slightly lighter font weight */
-    font-size: 0.9rem; /* Smaller font size */
+    font-weight: 500; /* Standard font weight */
+    font-size: 1rem; /* Standard font size */
     transition: color 0.3s;
 }
 
 .header nav a:hover {
-    color: #00cc88; /* Hover color */
+    color: #00cc88; /* Darker green on hover */
 }
 
-//* User Info Card */
+/* Google Fonts Import for JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* User Info Card */
 .user-info {
-    background-color: #1c1c1c; /* Dark background */
-    padding: 10px; /* Reduced padding for a smaller card */
-    border-radius: 8px; /* Slightly smaller border radius */
-    margin: 15px; /* Reduced margin */
-    color: #00ffaa; /* Text color */
+    background-color: #2a2a2a; /* Darker background */
+    padding: 20px; /* Increased padding for larger card */
+    border-radius: 12px; /* Larger border radius */
+    margin: 20px; /* Increased margin */
+    color: #00ffaa; /* Green text color */
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Softer shadow */
-    font-size: 0.9rem; /* Smaller font size for text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+    font-size: 1rem; /* Larger font size */
+    font-family: 'JetBrains Mono', monospace; /* JetBrains Mono font */
 }
 
-/* Announcement Card */
 /* Announcement Card */
 .announcement {
-    background-color: #2C5F2D; /* Deep Christmas Green */
-    padding: 10px; /* Reduced padding for a smaller card */
-    border-radius: 8px; /* Slightly smaller border radius */
-    margin: 15px; /* Reduced margin */
-    color: #FFFFFF; /* White text for better readability */
+    background-color: #2a2a2a; /* Darker background */
+    padding: 20px; /* Increased padding for larger card */
+    border-radius: 12px; /* Larger border radius */
+    margin: 20px; /* Increased margin */
+    color: #00ffaa; /* Green text color */
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Slightly enhanced shadow */
-    font-size: 0.9rem; /* Smaller font size for text */
-    border: 2px solid #1E4D1E; /* Darker green border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+    font-size: 1rem; /* Larger font size */
+    border: 2px solid #00ffaa; /* Green border */
     position: relative; /* For positioning pseudo-elements */
+    font-family: 'JetBrains Mono', monospace; /* JetBrains Mono font */
 }
 
-/* Optional: Add festive decorative elements */
+/* Optional: Add decorative elements */
 .announcement::before,
 .announcement::after {
     content: '❄️'; /* Snowflake decorations */
     position: absolute;
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Increased size */
     opacity: 0.7;
 }
 
 .announcement::before {
-    top: 5px;
-    left: 10px;
+    top: 10px;
+    left: 15px;
 }
 
 .announcement::after {
-    bottom: 5px;
-    right: 10px;
+    bottom: 10px;
+    right: 15px;
 }
 
 /* Styling for the announcement icons */
 .announcement i {
-    color: #FFD700; /* Gold color for icons to stand out */
+    color: #00ffaa; /* Green color for icons to stand out */
     margin-right: 5px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Slight glow effect */
 }
 
 /* Highlight important text */
 .announcement h3 {
-    color: #FFFFFF; /* White heading */
+    color: #00ffaa; /* Green heading */
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for depth */
 }
 
 /* Ensure links are visible and festive */
 .announcement a {
-    color: #FFD700; /* Gold color for links */
+    color: #00ffaa; /* Green color for links */
     text-decoration: underline;
     transition: color 0.3s ease;
 }
 
 .announcement a:hover {
-    color: #FFFFFF; /* White on hover */
+    color: #00cc88; /* Darker green on hover */
 }
-
 
 /* Button Styles */
 /* Mobile-Optimized Button Styles */
@@ -498,8 +516,10 @@ button.danger:hover, button.danger:focus {
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Transaction Section */
+/* Google Fonts Import for JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
+/* Transaction Section */
 
 /* Input Fields */
 .transaction-container input,
@@ -508,82 +528,86 @@ button.danger:hover, button.danger:focus {
     padding: 8px; /* Reduced padding for input fields */
     border: 2px solid rgba(0, 255, 170, 0.8); /* Neon green border */
     border-radius: 8px;
-    width: 80%;
-    max-width: 300px;
-    font-family: "Courier New", Courier, monospace;
-    background-color: #3a3a3c; /* Darker background for inputs */
+    width: 100%; /* Full width to fit within the screen */
+    max-width: 300px; /* Max width to prevent oversized inputs */
+    font-family: 'JetBrains Mono', monospace; /* JetBrains Mono font */
+    background-color: #2a2a2a; /* Darker background for inputs */
     color: #e0e0e0; /* Text color */
 }
 
-
 /* Link Styles */
 a:link {
-    color: cyan; /* Unvisited link color */
+    color: #00ffaa; /* Unvisited link color */
     text-decoration: none; /* Remove underline */
 }
 
 a:visited {
-    color: cyan; /* Visited link color */
+    color: #00ffaa; /* Visited link color */
     text-decoration: none; /* Remove underline */
 }
 
 a:hover {
-    color: #00ffff; /* Hover state color (slightly lighter cyan) */
+    color: #00cc88; /* Hover state color (slightly darker green) */
     text-decoration: underline; /* Underline on hover */
 }
 
 a:active {
-    color: #00e5e5; /* Active link color (darker cyan) */
+    color: #009977; /* Active link color (darker green) */
 }
 
+/* Card Styles */
 .card.dark-theme {
-    background: linear-gradient(135deg, #1a1a1a, #101010);
-    color: #00ffaa;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #00ffaa;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: 900;
+    background: #1e1e1e; /* Dark background */
+    color: #00ffaa; /* Green text color */
+    border-radius: 12px; /* Larger border radius */
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.3); /* Enhanced shadow */
+    padding: 20px; /* Increased padding */
+    margin-bottom: 20px; /* Standard margin */
+    border: 1px solid #00ffaa; /* Green border */
+    font-family: 'JetBrains Mono', monospace; /* JetBrains Mono font */
+    font-weight: 900; /* Bold text */
+    width: calc(100% - 40px); /* Adjusted width to fit within screen */
+    max-width: 600px; /* Max width to prevent oversized cards */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .card.dark-theme .card-content {
-    padding: 10px;
+    padding: 20px; /* Increased padding */
 }
 
 .card.dark-theme h3 {
-    color: #00ffaa;
-    text-shadow: 0 0 10px rgba(0, 255, 170, 0.7);
+    color: #00ffaa; /* Green heading */
+    text-shadow: 0 0 10px rgba(0, 255, 170, 0.7); /* Subtle shadow */
 }
 
 .card.dark-theme button {
-    background-color: #1c1c1c;
-    color: #00ffaa;
-    border: 1px solid #00ffaa;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-shadow: 0 0 5px rgba(0, 255, 170, 0.7);
-    box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
-    font-family: "Courier New", Courier, monospace;
-    font-weight: 900;
+    background-color: #2a2a2a; /* Darker background */
+    color: #00ffaa; /* Green text color */
+    border: 1px solid #00ffaa; /* Green border */
+    padding: 10px 15px; /* Standard padding */
+    border-radius: 8px; /* Larger border radius */
+    cursor: pointer; /* Pointer cursor */
+    transition: all 0.3s; /* Smooth transition */
+    text-shadow: 0 0 5px rgba(0, 255, 170, 0.7); /* Slight glow effect */
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.3); /* Enhanced shadow */
+    font-family: 'JetBrains Mono', monospace; /* JetBrains Mono font */
+    font-weight: 900; /* Bold text */
 }
 
 .card.dark-theme button:hover {
-    background-color: #00ffaa;
-    color: #1a1a1a;
-    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+    background-color: #00ffaa; /* Green background on hover */
+    color: #1e1e1e; /* Dark text color on hover */
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5); /* Enhanced shadow on hover */
 }
 
 .card.dark-theme .announcement {
-    background-color: #1c1c1c;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 15px;
-    border: 1px solid #00ffaa;
-    box-shadow: inset 0 0 10px rgba(0, 255, 170, 0.3);
+    background-color: #2a2a2a; /* Darker background */
+    padding: 20px; /* Increased padding */
+    border-radius: 8px; /* Larger border radius */
+    margin-top: 20px; /* Standard margin */
+    border: 1px solid #00ffaa; /* Green border */
+    box-shadow: inset 0 0 10px rgba(0, 255, 170, 0.3); /* Enhanced shadow */
 }
 
 /* Account Section Styles */
