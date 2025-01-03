@@ -1,5 +1,5 @@
 // Global variables
-let coinBalance = 0;
+let coinBalance = 10000;
 let userId = '';
 let username = '';
 let tasks = {
@@ -285,9 +285,9 @@ function inviteFriends() {
     } else {
         const elapsed = (Date.now() - inviteStartTime) / (1000 * 60 * 60);
         if (elapsed >= 2) {
-            coinBalance += 2;
+            coinBalance += 0.05;
             document.getElementById('coin-balance').textContent = coinBalance;
-            showAlert('You have been rewarded 10,000 BERKS for inviting friends!');
+            showAlert('You have been rewarded 0.05 BERKS for inviting friends!');
             tasks.invite = false;
             saveUserData();
         } else {
@@ -304,9 +304,9 @@ function playMiniGames() {
         let playDuration = 0;
         let totalCoinsEarned = 0;
 
-        // Reward 10 BERKS every minute
+        // Reward 0.001 BERKS every minute
         const rewardInterval = setInterval(() => {
-            const rewardAmount = 10; // Fixed reward of 10 BERKS per minute
+            const rewardAmount = 0.001; // Fixed reward of 10 BERKS per minute
             playDuration += 1;
             coinBalance += rewardAmount;
             totalCoinsEarned += rewardAmount;
@@ -334,8 +334,8 @@ function playMiniGames() {
 
 // Function to buy an assistant
 function buyAssistant() {
-    if (coinBalance >= 1000) {
-        coinBalance -= 1000;
+    if (coinBalance >= 100) {
+        coinBalance -= 100;
         hasAssistant = true;
         lastAssistantPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -352,8 +352,8 @@ function buyAssistant() {
 
 // Function to buy an Ice Factory
 function buyIceFactory() {
-    if (coinBalance >= 5000) {
-        coinBalance -= 5000;
+    if (coinBalance >= 500) {
+        coinBalance -= 500;
         hasIceFactory = true;
         lastIceFactoryPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -370,8 +370,8 @@ function buyIceFactory() {
 
 // Function to buy an Ice Miner
 function buyIceMiner() {
-    if (coinBalance >= 3500) {
-        coinBalance -= 3500;
+    if (coinBalance >= 350) {
+        coinBalance -= 350;
         hasIceMiner = true;
         lastIceMinerPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -388,8 +388,8 @@ function buyIceMiner() {
 
 // Function to buy a Task Manager
 function buyTaskManager() {
-    if (coinBalance >= 2000) {
-        coinBalance -= 2000;
+    if (coinBalance >= 200) {
+        coinBalance -= 200;
         hasTaskManager = true;
         lastTaskManagerPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -406,8 +406,8 @@ function buyTaskManager() {
 
 // Function to buy a BERK Vault
 function buyBerkVault() {
-    if (coinBalance >= 8000) {
-        coinBalance -= 8000;
+    if (coinBalance >= 800) {
+        coinBalance -= 800,
         hasBerkVault = true;
         lastBerkVaultPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -424,8 +424,8 @@ function buyBerkVault() {
 
 // Function to buy an IceBot
 function buyIceBot() {
-    if (coinBalance >= 3200) {
-        coinBalance -= 3200;
+    if (coinBalance >= 320) {
+        coinBalance -= 320;
         hasIceBot = true;
         lastIceBotPayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -442,8 +442,8 @@ function buyIceBot() {
 
 // Function to buy a Frost Forge
 function buyFrostForge() {
-    if (coinBalance >= 20000) {
-        coinBalance -= 20000;
+    if (coinBalance >= 1200) {
+        coinBalance -= 1200;
         hasFrostForge = true;
         lastFrostForgePayout = Date.now();
         document.getElementById('coin-balance').textContent = coinBalance;
@@ -469,11 +469,11 @@ function updateAssistantCountdown() {
         document.getElementById('assistantCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 20;
+            coinBalance += 0.02;
             lastAssistantPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your Assistant has generated 20 BERKS!');
+            showAlert('Your Assistant has generated 0.02 BERKS!');
         }
 
         setTimeout(updateAssistantCountdown, 1000);
@@ -491,11 +491,11 @@ function updateIceFactoryCountdown() {
         document.getElementById('iceFactoryCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 140;
+            coinBalance += 0.014;
             lastIceFactoryPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your Ice Factory has generated 140 BERKS!');
+            showAlert('Your Ice Factory has generated 0.014 BERKS!');
         }
 
         setTimeout(updateIceFactoryCountdown, 1000);
@@ -512,11 +512,11 @@ function updateIceMinerCountdown() {
         document.getElementById('iceMinerCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 110;
+            coinBalance += 0.011;
             lastIceMinerPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your IceMiner has generated 110 BERKS!');
+            showAlert('Your IceMiner has generated 0.011 BERKS!');
         }
 
         setTimeout(updateIceMinerCountdown, 1000);
@@ -534,11 +534,11 @@ function updateTaskManagerCountdown() {
         document.getElementById('taskManagerCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 90;
+            coinBalance += 0.09;
             lastTaskManagerPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your Task Manager has generated 90 BERKS!');
+            showAlert('Your Task Manager has generated 0.09 BERKS!');
         }
 
         setTimeout(updateTaskManagerCountdown, 1000);
@@ -556,11 +556,11 @@ function updateBerkVaultCountdown() {
         document.getElementById('berkVaultCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 200;
+            coinBalance += 0.02;
             lastBerkVaultPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your BERK Vault has generated 200 BERKS!');
+            showAlert('Your BERK Vault has generated 0.02 BERKS!');
         }
 
         setTimeout(updateBerkVaultCountdown, 1000);
@@ -578,11 +578,11 @@ function updateIceBotCountdown() {
         document.getElementById('iceBotCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 125;
+            coinBalance += 0.0125;
             lastIceBotPayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your IceBot has generated 125 BERKS!');
+            showAlert('Your IceBot has generated 0.0125 BERKS!');
         }
 
         setTimeout(updateIceBotCountdown, 1000);
@@ -600,11 +600,11 @@ function updateFrostForgeCountdown() {
         document.getElementById('frostForgeCountdown').textContent = `${minutes}m ${seconds}s`;
 
         if (timeUntilNextPayout === 0) {
-            coinBalance += 350;
+            coinBalance += 0.035;
             lastFrostForgePayout = now;
             document.getElementById('coin-balance').textContent = coinBalance;
             saveUserData();
-            showAlert('Your Frost Forge has generated 350 BERKS!');
+            showAlert('Your Frost Forge has generated 0.035 BERKS!');
         }
 
         setTimeout(updateFrostForgeCountdown, 1000);
@@ -625,13 +625,13 @@ function updateEarningsCountdowns() {
 // Function to calculate total earnings per hour
 function calculateTotalEarningsPerHour() {
     let totalEarnings = 0;
-    if (hasAssistant) totalEarnings += 20;
-    if (hasIceFactory) totalEarnings += 140;
-    if (hasIceMiner) totalEarnings += 110;
-    if (hasTaskManager) totalEarnings += 90;
-    if (hasBerkVault) totalEarnings += 200;
-    if (hasIceBot) totalEarnings += 125;
-    if (hasFrostForge) totalEarnings += 350;
+    if (hasAssistant) totalEarnings += 0.02;
+    if (hasIceFactory) totalEarnings += 0.014;
+    if (hasIceMiner) totalEarnings += 0.011;
+    if (hasTaskManager) totalEarnings += 0.09;
+    if (hasBerkVault) totalEarnings += 0.02;
+    if (hasIceBot) totalEarnings += 0.0125;
+    if (hasFrostForge) totalEarnings += 0.035;
 
     document.getElementById('total-earnings-per-hour').textContent = totalEarnings;
 }
@@ -819,9 +819,9 @@ function selectAnswer(option) {
 
     let correctAnswer = 'C';
     if (option === correctAnswer) {
-        coinBalance += 10;
+        coinBalance += 0.005;
         document.getElementById('coin-balance').textContent = coinBalance;
-        showAlert('Correct! You have earned 10 BERK.');
+        showAlert('Correct! You have earned 0.005 BERKS.');
     } else {
         showAlert('Incorrect answer. Better luck next time!');
     }
