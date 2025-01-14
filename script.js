@@ -1,5 +1,5 @@
 // Global variables
-let coinBalance = 10000;
+let coinBalance = 0;
 let userId = '';
 let username = '';
 let tasks = {
@@ -817,11 +817,11 @@ function selectAnswer(option) {
 
     setCookie('lastQuizDate', today, 1);
 
-    let correctAnswer = 'C';
+    let correctAnswer = 'A';
     if (option === correctAnswer) {
-        coinBalance += 0.005;
+        coinBalance += 0.001;
         document.getElementById('coin-balance').textContent = coinBalance;
-        showAlert('Correct! You have earned 0.005 BERKS.');
+        showAlert('Correct! You have earned 0.001 BERKS.');
     } else {
         showAlert('Incorrect answer. Better luck next time!');
     }
